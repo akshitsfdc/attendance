@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background"
+    tools:context=".activities.LoginActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/logoWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+        
+        <ImageView
+            android:layout_width="@dimen/login_logo_size"
+            android:layout_height="@dimen/login_logo_size"
+            android:src="@drawable/spalash_logo_temp"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/logoWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/card_back_login"
+        android:elevation="@dimen/login_card_elevation"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/login_content_margin"
+            >
+
+            <TextView
+                android:id="@+id/loginLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/login__label"
+                android:textSize="@dimen/login_label_text_size"
+                android:textColor="@color/black"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/empId"
+                android:layout_marginTop="@dimen/login_margin_top_contents"
+                android:layout_below="@+id/loginLabel"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/login_emp"
+                app:boxCornerRadiusBottomEnd="@dimen/login_textbox_corner"
+                app:boxCornerRadiusBottomStart="@dimen/login_textbox_corner"
+                app:boxCornerRadiusTopEnd="@dimen/login_textbox_corner"
+                app:boxCornerRadiusTopStart="@dimen/login_textbox_corner"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/empIdEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/mobile_input"
+                android:layout_marginTop="@dimen/login_margin_top_contents"
+                android:layout_below="@+id/empId"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/login_mobile"
+                app:boxCornerRadiusBottomEnd="@dimen/login_textbox_corner"
+                app:boxCornerRadiusBottomStart="@dimen/login_textbox_corner"
+                app:boxCornerRadiusTopEnd="@dimen/login_textbox_corner"
+                app:boxCornerRadiusTopStart="@dimen/login_textbox_corner"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mobileNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/desText"
+                android:layout_below="@+id/mobile_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_text_desc"
+                android:layout_marginTop="@dimen/login_margin_top_contents"
+                />
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_marginTop="@dimen/login_margin_top_contents"
+                android:background="@drawable/button_corners"
+                android:textColor="@color/white"
+                android:layout_below="@+id/desText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_button_height"
+                android:text="Continue"
+
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

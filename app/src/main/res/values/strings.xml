@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="app_name">Face Attendance</string>
+
+<!--    login-->
+    <string name="login__label">Login</string>
+    <string name="login_emp">Enter ID</string>
+    <string name="login_mobile">Mobile No.</string>
+    <string name="login_text_hint">Enter mobile number</string>
+    <string name="login_text_desc">A <b>5 Digit OTP</b> will be sent via SMS to verify your account</string>
+
+</resources>
