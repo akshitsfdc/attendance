@@ -14,11 +14,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        routing = new Routing(this);
-
         setContentView(R.layout.activity_main);
 
+        routing = new Routing(this);
         int SPLASH_DISPLAY_LENGTH = 1000;
 
         new Handler().postDelayed(new Runnable() {

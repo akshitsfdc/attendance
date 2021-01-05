@@ -2,11 +2,25 @@
 
     <string name="app_name">Face Attendance</string>
 
-<!--    login-->
+    <!-- login -->
     <string name="login__label">Login</string>
     <string name="login_emp">Enter ID</string>
     <string name="login_mobile">Mobile No.</string>
     <string name="login_text_hint">Enter mobile number</string>
     <string name="login_text_desc">A <b>5 Digit OTP</b> will be sent via SMS to verify your account</string>
+    <string name="login_btn_txt">Continue</string>
+    <string name="invalid_mobile_des">Please enter a valid 10 digit mobile number</string>
+    <string name="invalid_mobile">Invalid mobile number</string>
+    <string name="otp_send_failed_mobile">Failed to send you OTP at this moment.Please check your number or contact your supervisor</string>
+    <!-- OTP -->
+    <string name="otp__label">Verification Code</string>
+    <string name="otp_text_desc">Please enter OTP sent to </string>
+    <string name="otp_btn_txt">Continue</string>
+    <string name="otp_resend"><u>Resend OTP</u></string>
 
+    <string name="success_status">success</string>
+
+    <string name="generic_error">Something went wrong please try again later</string>
+    <string name="application_key">SFALGSAI421KFSAFSGSSGWQRWWTW</string>
+    <string name="contentType">application/json</string>
 </resources>

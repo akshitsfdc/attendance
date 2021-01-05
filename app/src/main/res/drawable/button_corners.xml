@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
 
-    <solid android:color="@color/purple_500" />
+    <solid android:color="@color/primary" />
 
 
     <corners android:radius="@dimen/login_button_corner"/>

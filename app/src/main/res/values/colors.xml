@@ -8,4 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="app_background">#f8f8f8</color>
+
+    <color name="primary">#7252CD</color>
+    <color name="primary_var">#7252CD</color>
+    <color name="secondary">#76AA3B</color>
+    <color name="secondary_var">#76AA3B</color>
+
+    <color name="warn">#E7030C</color>
+    <color name="grey">#626262</color>
+
 </resources>

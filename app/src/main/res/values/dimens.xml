@@ -11,4 +11,16 @@
     <dimen name="login_button_corner">10dp</dimen>
 
     <dimen name="login_logo_size">120dp</dimen>
+
+<!--    otp screen-->
+    <dimen name="otp_edit_text_border">1dp</dimen>
+    <dimen name="otp_edit_text_corner_radius">6dp</dimen>
+    <dimen name="otp_edit_text_text">22sp</dimen>
+    <dimen name="otp_edit_text_margin">15dp</dimen>
+    <dimen name="otp_edit_text_height">40dp</dimen>
+    <dimen name="otp_edit_text_width">40dp</dimen>
+    <dimen name="otp_edit_text_margin_top">20dp</dimen>
+    <dimen name="otp_resend_margin_top">20dp</dimen>
+    <dimen name="otp_btn_margin_top">25dp</dimen>
+    <dimen name="otp_desc_text_margin_top">10dp</dimen>
 </resources>

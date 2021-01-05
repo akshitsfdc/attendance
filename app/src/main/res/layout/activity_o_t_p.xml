@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background"
+    tools:context=".activities.OTPActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/logoWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <ImageView
+            android:layout_width="@dimen/login_logo_size"
+            android:layout_height="@dimen/login_logo_size"
+            android:src="@drawable/ic_logo_icon"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/logoWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/card_back_login"
+        android:elevation="@dimen/login_card_elevation"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/login_content_margin"
+            >
+
+            <TextView
+                android:id="@+id/otpLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/otp__label"
+                android:textSize="@dimen/login_label_text_size"
+                android:textColor="@color/black"
+                />
+
+
+
+
+
+            <TextView
+                android:id="@+id/desText"
+                android:layout_below="@+id/otpLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/otp_text_desc"
+                android:layout_marginTop="@dimen/otp_desc_text_margin_top"
+                />
+
+            <LinearLayout
+                android:id="@+id/root_otp_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/desText"
+                android:layout_marginTop="@dimen/otp_edit_text_margin_top"
+                android:padding="10dp"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <EditText
+                    android:id="@+id/otp_edit_box1"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/otp_edit_text_width"
+                    android:layout_height="@dimen/otp_edit_text_height"
+                    android:layout_marginEnd="@dimen/otp_edit_text_margin"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textSize="@dimen/otp_edit_text_text"
+                    android:background="@drawable/otp_edit_text"/>
+
+                <EditText
+                    android:id="@+id/otp_edit_box2"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/otp_edit_text_width"
+                    android:layout_height="@dimen/otp_edit_text_height"
+                    android:layout_marginEnd="@dimen/otp_edit_text_margin"
+                    android:gravity="center"
+                    android:textSize="@dimen/otp_edit_text_text"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:background="@drawable/otp_edit_text"/>
+
+                <EditText
+                    android:id="@+id/otp_edit_box3"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/otp_edit_text_width"
+                    android:layout_height="@dimen/otp_edit_text_height"
+                    android:layout_marginEnd="@dimen/otp_edit_text_margin"
+                    android:gravity="center"
+                    android:textSize="@dimen/otp_edit_text_text"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:background="@drawable/otp_edit_text"/>
+
+                <EditText
+                    android:id="@+id/otp_edit_box4"
+                    android:layout_width="@dimen/otp_edit_text_width"
+                    android:layout_height="@dimen/otp_edit_text_height"
+                    android:gravity="center"
+                    android:layout_marginEnd="@dimen/otp_edit_text_margin"
+                    android:textSize="@dimen/otp_edit_text_text"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:background="@drawable/otp_edit_text" />
+
+                <EditText
+                    android:id="@+id/otp_edit_box5"
+                    android:layout_width="@dimen/otp_edit_text_width"
+                    android:layout_height="@dimen/otp_edit_text_height"
+                    android:gravity="center"
+                    android:textSize="@dimen/otp_edit_text_text"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:background="@drawable/otp_edit_text" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/resend"
+                android:layout_below="@+id/root_otp_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/primary"
+                android:text="@string/otp_resend"
+                android:layout_marginTop="@dimen/otp_desc_text_margin_top"
+                />
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_marginTop="@dimen/otp_btn_margin_top"
+                android:background="@drawable/button_corners"
+                android:textColor="@color/white"
+                android:layout_below="@+id/resend"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_button_height"
+                android:text="@string/otp_btn_txt"
+
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
