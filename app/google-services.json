@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "336320190860",
+    "project_id": "face-detection-27c32",
+    "storage_bucket": "face-detection-27c32.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:336320190860:android:2648f258afd61f737e9ea9",
+        "android_client_info": {
+          "package_name": "com.enalytix.faceattendance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "336320190860-n583n5pknec57752e2i8dcl3nree5bhh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoiRE2_UZ-GTJBfFbFS1DHXO3dZgO4Tk0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "336320190860-n583n5pknec57752e2i8dcl3nree5bhh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

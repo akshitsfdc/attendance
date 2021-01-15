@@ -1,33 +1,48 @@
 package com.enalytix.faceattendance.services;
 
 
-import com.enalytix.faceattendance.R;
+import com.enalytix.faceattendance.models.AttendanceRequest;
+import com.enalytix.faceattendance.models.AttendanceResponse;
 import com.enalytix.faceattendance.models.AuthRequest;
 import com.enalytix.faceattendance.models.UserData;
 
+import java.io.File;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.Field;
-import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.HeaderMap;
-import retrofit2.http.Headers;
-import retrofit2.http.PATCH;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 
 public interface FaceAttendanceAPI {
 
     @POST("send-otp")
     Call<UserData> getUserAuthData(@Body AuthRequest authRequest);
+
+//    @POST("uploadatt")
+//    Call<AttendanceResponse> registerUserByFace(@Body AttendanceRequest authRequest);
+
+    @Multipart
+    @POST("uploadatt")
+    Call<AttendanceResponse> registerUserByFace(
+            @Part("file\"; filename=\"pp.png\" ") RequestBody file,
+            @Part("id") RequestBody id,
+            @Part("siteid") RequestBody siteid
+            );
+
+    //    @POST("uploadatt")
+//    Call<AttendanceResponse> registerUserByFace(@Body AttendanceRequest authRequest);
+//    @Multipart
+//    @POST("uploadatt")
+//    Call<AttendanceResponse> registerUserByFace(
+//            @PartMap Map<String, RequestBody> params
+//    );
 //    @GET("posts")
 //    Call<List<Post>> getPosts(
 //            @Query("userId") Integer[] userId,

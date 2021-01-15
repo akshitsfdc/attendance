@@ -10,11 +10,26 @@
     <color name="app_background">#f8f8f8</color>
 
     <color name="primary">#7252CD</color>
-    <color name="primary_var">#7252CD</color>
+    <color name="primary_var">#2b2246</color>
     <color name="secondary">#76AA3B</color>
     <color name="secondary_var">#76AA3B</color>
 
     <color name="warn">#E7030C</color>
     <color name="grey">#626262</color>
+
+    <color name="grey_low">#f7f7f7</color>
+
+
+    <color name="app_pink">#fff1fd</color>
+    <color name="app_light_blue">#e6f7fe</color>
+
+    <color name="app_light_green">#e5fcf6</color>
+
+    <color name="app_light_red">#fee2e2</color>
+    <color name="app_yellow_light">#fefee2</color>
+    <color name="app_yellow_dark">#FDD835</color>
+
+    <color name="hint">#808080</color>
+
 
 </resources>

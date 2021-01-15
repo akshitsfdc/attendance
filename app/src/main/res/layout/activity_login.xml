@@ -61,12 +61,16 @@
                 app:boxCornerRadiusBottomStart="@dimen/login_textbox_corner"
                 app:boxCornerRadiusTopEnd="@dimen/login_textbox_corner"
                 app:boxCornerRadiusTopStart="@dimen/login_textbox_corner"
+                app:boxStrokeColor="@color/primary"
+                app:hintEnabled="true"
+                android:textColorHint="@color/hint"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/empIdEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/grey"
                     android:inputType="number"
                     android:maxLength="10"
                     />
@@ -84,6 +88,11 @@
                 app:boxCornerRadiusBottomStart="@dimen/login_textbox_corner"
                 app:boxCornerRadiusTopEnd="@dimen/login_textbox_corner"
                 app:boxCornerRadiusTopStart="@dimen/login_textbox_corner"
+                app:boxStrokeColor="@color/primary"
+                app:errorTextColor="@color/warn"
+                app:hintEnabled="true"
+                android:textColorHint="@color/hint"
+
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -91,7 +100,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
+                    android:textColor="@color/grey"
                     android:maxLength="10"
+
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/login_text_desc"
                 android:layout_marginTop="@dimen/login_margin_top_contents"
+                android:textColor="@color/grey"
                 />
 
             <Button
@@ -115,9 +127,19 @@
                 android:text="@string/login_btn_txt"
 
                 />
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/loadingIndicator"
+                android:visibility="gone"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:indeterminate="true"
+                app:showAnimationBehavior="outward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
 
     </RelativeLayout>
+
 
 
 </RelativeLayout>

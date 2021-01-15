@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_background"
-    tools:context=".activities.OTPActivity">
+    tools:context=".activities.OTPActivity"
+    android:id="@+id/parent"
+    >
 
 
     <RelativeLayout
@@ -58,14 +60,27 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:text="@string/otp_text_desc"
+                android:textColor="@color/grey"
                 android:layout_marginTop="@dimen/otp_desc_text_margin_top"
                 />
+
+            <TextView
+                android:id="@+id/counterText"
+                android:layout_below="@+id/desText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="1:59"
+                android:textColor="@color/grey"
+                android:layout_marginTop="@dimen/otp_timer_top"
+                />
+
 
             <LinearLayout
                 android:id="@+id/root_otp_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/desText"
+                android:layout_below="@+id/counterText"
                 android:layout_marginTop="@dimen/otp_edit_text_margin_top"
                 android:padding="10dp"
                 android:orientation="horizontal"
@@ -81,6 +96,7 @@
                     android:inputType="number"
                     android:maxLength="1"
                     android:textSize="@dimen/otp_edit_text_text"
+                    android:textColor="@color/grey"
                     android:background="@drawable/otp_edit_text"/>
 
                 <EditText
@@ -93,6 +109,7 @@
                     android:textSize="@dimen/otp_edit_text_text"
                     android:inputType="number"
                     android:maxLength="1"
+                    android:textColor="@color/grey"
                     android:background="@drawable/otp_edit_text"/>
 
                 <EditText
@@ -105,6 +122,7 @@
                     android:textSize="@dimen/otp_edit_text_text"
                     android:inputType="number"
                     android:maxLength="1"
+                    android:textColor="@color/grey"
                     android:background="@drawable/otp_edit_text"/>
 
                 <EditText
@@ -117,6 +135,7 @@
                     android:layout_weight="1"
                     android:inputType="number"
                     android:maxLength="1"
+                    android:textColor="@color/grey"
                     android:background="@drawable/otp_edit_text" />
 
                 <EditText
@@ -128,12 +147,14 @@
                     android:layout_weight="1"
                     android:inputType="number"
                     android:maxLength="1"
+                    android:textColor="@color/grey"
                     android:background="@drawable/otp_edit_text" />
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/resend"
+                android:enabled="false"
                 android:layout_below="@+id/root_otp_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -141,9 +162,10 @@
                 android:textColor="@color/primary"
                 android:text="@string/otp_resend"
                 android:layout_marginTop="@dimen/otp_desc_text_margin_top"
+
                 />
             <Button
-                android:id="@+id/loginButton"
+                android:id="@+id/verifyButton"
                 android:layout_marginTop="@dimen/otp_btn_margin_top"
                 android:background="@drawable/button_corners"
                 android:textColor="@color/white"
@@ -153,6 +175,16 @@
                 android:text="@string/otp_btn_txt"
 
                 />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/loadingIndicator"
+                android:visibility="gone"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:indeterminate="true"
+                app:showAnimationBehavior="outward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
 
     </RelativeLayout>

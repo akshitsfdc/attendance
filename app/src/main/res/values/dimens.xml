@@ -17,10 +17,71 @@
     <dimen name="otp_edit_text_corner_radius">6dp</dimen>
     <dimen name="otp_edit_text_text">22sp</dimen>
     <dimen name="otp_edit_text_margin">15dp</dimen>
+    <dimen name="otp_timer_top">10dp</dimen>
     <dimen name="otp_edit_text_height">40dp</dimen>
     <dimen name="otp_edit_text_width">40dp</dimen>
     <dimen name="otp_edit_text_margin_top">20dp</dimen>
     <dimen name="otp_resend_margin_top">20dp</dimen>
     <dimen name="otp_btn_margin_top">25dp</dimen>
     <dimen name="otp_desc_text_margin_top">10dp</dimen>
+
+<!--    Employee home-->
+
+    <dimen name="emp_home_app_logo_size">30dp</dimen>
+    <dimen name="emp_home_margin_h">15dp</dimen>
+    <dimen name="emp_home_margin_r_h">15dp</dimen>
+    <dimen name="emp_home_profile_pic">30dp</dimen>
+    <dimen name="emp_home_time_top">20dp</dimen>
+    <dimen name="emp_home_time_text">14sp</dimen>
+    <dimen name="emp_home_card_margin_h">20dp</dimen>
+    <dimen name="emp_home_card_margin_v">20dp</dimen>
+    <dimen name="emp_home_card_bottom_height">50dp</dimen>
+    <dimen name="emp_home_att_logo_wrapper">100dp</dimen>
+    <dimen name="emp_home_att_logo_size">70dp</dimen>
+    <dimen name="emp_home_att_label">18sp</dimen>
+    <dimen name="emp_home_att_label_margin_h">20dp</dimen>
+    <dimen name="emp_home_check_in_box_margin_h">25dp</dimen>
+    <dimen name="emp_home_check_in_icon">20dp</dimen>
+    <dimen name="emp_home_check_in_text">20sp</dimen>
+    <dimen name="emp_home_check_in_text_margin_start">10sp</dimen>
+
+
+<!--    Record Attendance-->
+
+    <dimen name="re_att_capture_button_height">50dp</dimen>
+    <dimen name="re_att_capture_button_margin_h">20dp</dimen>
+
+    <dimen name="re_att_cancel_button_height">50dp</dimen>
+    <dimen name="re_att_cancel_button_width">60dp</dimen>
+    <dimen name="re_att_capture_button_radius">6dp</dimen>
+    <dimen name="re_att_cancel_button_margin_h">20dp</dimen>
+    <dimen name="re_att_capture_button_margin_v">50dp</dimen>
+    <dimen name="re_att_capture_text">15sp</dimen>
+    <dimen name="re_att_scanning_text">20sp</dimen>
+
+
+<!--    Attendance Result-->
+    <dimen name="att_res_result_container_margin_h">60dp</dimen>
+    <dimen name="att_res_result_text_size">18sp</dimen>
+    <dimen name="att_res_result_text_margin_h">20dp</dimen>
+    <dimen name="att_res_result_text_margin_v">15dp</dimen>
+
+
+<!--    reg again-->
+    <dimen name="reg_again_msg_margin_h">50dp</dimen>
+    <dimen name="reg_again_msg_text">18sp</dimen>
+    <dimen name="reg_again_msg_margin_v">20dp</dimen>
+
+    <dimen name="home_profile_round_radius">15dp</dimen>
+
+    <dimen name="home_container_round_radius">40dp</dimen>
+    <dimen name="home_container_round_elevation">10dp</dimen>
+    <dimen name="devider_line_width_h">0.10dp</dimen>
+
+    <dimen name="attendance_success_bg_corner_radius">8dp</dimen>
+    <dimen name="attendance_success_bg_corner">1dp</dimen>
+
+    <dimen name="app_button_height">60dp</dimen>
+
+
 </resources>

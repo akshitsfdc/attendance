@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"
+    >
+
+
+
+    <solid android:color="@color/app_light_red"  />
+
+    <stroke android:width="@dimen/attendance_success_bg_corner" android:color="@color/warn"/>
+
+    <corners android:radius="@dimen/attendance_success_bg_corner_radius"/>
+
+</shape>

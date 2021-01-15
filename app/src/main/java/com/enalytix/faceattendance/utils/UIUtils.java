@@ -26,4 +26,16 @@ public class UIUtils {
     public  void showLongSnakeBar(String msg){
         Snackbar.make(this.parentView, msg, Snackbar.LENGTH_LONG).show();
     }
+
+    public String getMonthFromIndex(int index){
+        String[] months= {
+                "JAN", "FAB", "MAR", "APR", "MAY", "JUN", "JUL", "AGU", "SEPT", "OCT", "NOV", "DEC"
+        };
+        return months[index];
+    }
+    public String getAmOrPm(int index){
+        String[] am_pm = {"AM", "PM"};
+
+        return am_pm[index];
+    }
 }

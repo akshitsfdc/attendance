@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.EmployeeHome"
+    android:id="@+id/parent"
+    android:background="@color/primary"
+    >
+
+    <RelativeLayout
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        >
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:menu="@menu/top_menues"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="@dimen/emp_home_app_logo_size"
+                        android:layout_height="@dimen/emp_home_app_logo_size"
+
+                        android:layout_marginStart="@dimen/emp_home_margin_h"
+                        android:src="@drawable/ic_logo_icon" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/emp_home_profile_pic"
+                        android:layout_height="@dimen/emp_home_profile_pic"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/emp_home_margin_r_h"
+                        app:cardCornerRadius="@dimen/home_profile_round_radius"
+                        app:cardBackgroundColor="@color/white"
+                        >
+                        <ImageView
+                            android:id="@+id/profilePicture"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            />
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/siteNameheader"
+        android:layout_below="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+        <TextView
+            android:id="@+id/siteTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/mainContainer"
+        android:layout_below="@+id/siteNameheader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/home_round_background"
+        android:elevation="@dimen/home_container_round_elevation"
+        >
+        <TextView
+            android:id="@+id/timeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/emp_home_time_text"
+            android:layout_marginTop="@dimen/emp_home_time_top"
+            android:textColor="@color/grey"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/recordAttendanceCard"
+            android:layout_below="@+id/timeLabel"
+            android:layout_marginTop="@dimen/emp_home_card_margin_v"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/emp_home_card_margin_h"
+            android:layout_marginEnd="@dimen/emp_home_card_margin_h"
+            app:cardBackgroundColor="@color/white"
+            >
+            <RelativeLayout
+                android:id="@+id/attParent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/topView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/attLogoWrapper"
+                        android:layout_width="@dimen/emp_home_att_logo_wrapper"
+                        android:layout_height="@dimen/emp_home_att_logo_wrapper"
+                        android:background="@color/app_pink"
+                        >
+                        <ImageView
+                            android:id="@+id/attLogoImage"
+                            android:layout_centerInParent="true"
+                            android:layout_width="@dimen/emp_home_att_logo_size"
+                            android:layout_height="@dimen/emp_home_att_logo_size"
+                            android:src="@drawable/group_icon_png"
+                            />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_toRightOf="@+id/attLogoWrapper"
+                        android:layout_height="@dimen/emp_home_att_logo_wrapper">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/emp_home_att_label_margin_h"
+                            android:textSize="@dimen/emp_home_att_label"
+                            android:layout_marginTop="@dimen/emp_home_time_top"
+                            android:text="@string/emp_home_record_att_label"
+                            android:textColor="@color/black"
+                            />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/attDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/devider_line_width_h"
+                    android:layout_below="@+id/topView"
+                    android:background="@color/grey_low"
+
+                    />
+                <RelativeLayout
+                    android:layout_below="@+id/attDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/emp_home_card_bottom_height">
+
+                    <RelativeLayout
+                        android:id="@+id/loginWrapper"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/emp_home_check_in_box_margin_h">
+                        <ImageView
+                            android:id="@+id/loginIcon"
+                            android:layout_centerVertical="true"
+                            android:layout_width="@dimen/emp_home_check_in_icon"
+                            android:layout_height="@dimen/emp_home_check_in_icon"
+                            android:src="@drawable/ic_log_in"
+                            />
+                        <TextView
+                            android:layout_toRightOf="@+id/loginIcon"
+                            android:layout_marginStart="@dimen/emp_home_check_in_text_margin_start"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/emp_home_check_in"
+                            android:textColor="@color/primary"
+                            />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/logoutWrapper"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/emp_home_check_in_box_margin_h">
+                        <ImageView
+                            android:id="@+id/logoutIcon"
+                            android:layout_centerVertical="true"
+                            android:layout_width="@dimen/emp_home_check_in_icon"
+                            android:layout_height="@dimen/emp_home_check_in_icon"
+                            android:src="@drawable/ic_log_out"
+                            />
+                        <TextView
+                            android:layout_toRightOf="@+id/logoutIcon"
+                            android:layout_marginStart="@dimen/emp_home_check_in_text_margin_start"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/emp_home_check_out"
+                            android:textColor="@color/primary"
+                            />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_below="@+id/recordAttendanceCard"
+            android:layout_marginTop="@dimen/emp_home_card_margin_v"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/emp_home_card_margin_h"
+            android:layout_marginEnd="@dimen/emp_home_card_margin_h"
+            app:cardBackgroundColor="@color/white"
+            >
+            <RelativeLayout
+                android:id="@+id/myAttParent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/myAttTopView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/myAttLogoWrapper"
+                        android:layout_width="@dimen/emp_home_att_logo_wrapper"
+                        android:layout_height="@dimen/emp_home_att_logo_wrapper"
+                        android:background="@color/app_light_blue"
+                        >
+                        <ImageView
+                            android:id="@+id/myAttLogoImage"
+                            android:layout_centerInParent="true"
+                            android:layout_width="@dimen/emp_home_att_logo_size"
+                            android:layout_height="@dimen/emp_home_att_logo_size"
+                            android:src="@drawable/group_icon_png"
+                            />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_toRightOf="@+id/myAttLogoWrapper"
+                        android:layout_height="@dimen/emp_home_att_logo_wrapper">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/emp_home_att_label_margin_h"
+                            android:textSize="@dimen/emp_home_att_label"
+                            android:layout_marginTop="@dimen/emp_home_time_top"
+                            android:text="@string/emp_home_record_my_att_label"
+                            android:textColor="@color/black"
+                            />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+
+
+            </RelativeLayout>
+
+
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+</RelativeLayout>

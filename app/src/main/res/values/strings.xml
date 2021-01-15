@@ -17,10 +17,53 @@
     <string name="otp_text_desc">Please enter OTP sent to </string>
     <string name="otp_btn_txt">Continue</string>
     <string name="otp_resend"><u>Resend OTP</u></string>
+    <string name="otp_enter_otp">Please enter OTP first</string>
+    <string name="otp_invalid">Invalid OTP please try again</string>
 
     <string name="success_status">success</string>
 
     <string name="generic_error">Something went wrong please try again later</string>
     <string name="application_key">SFALGSAI421KFSAFSGSSGWQRWWTW</string>
     <string name="contentType">application/json</string>
+
+    <!--    emp Home-->
+    <string name="emp_home_record_att_label">Record Attendance</string>
+    <string name="emp_home_record_my_att_label">My Attendance</string>
+    <string name="emp_home_check_in">Check In</string>
+    <string name="emp_home_check_out">Check Out</string>
+
+
+    <!--    not at work location-->
+
+    <string name="not_at_work_warn">You are not at your work location!</string>
+    <string name="not_at_work_mgs">Try again when at work location</string>
+
+    <!--    record attendance-->
+    <string name="re_att_progress_text">Scanning…</string>
+    <string name="re_att_capture_button">Capture</string>
+    <string name="re_att_face_not_visible">Your face was not properly visible. Please try again</string>
+
+    <!--    max try-->
+
+    <string name="mx_try_warn">You have exceeded the allowed number of tries!</string>
+    <string name="mx_try_work_mgs">Ask your supervisor to re-register</string>
+    <string name="mx_try_button">Send Message To supervisor</string>
+
+    <!--    attendance Result-->
+    <string name="att_res_approved_txt">Attendance Recorded</string>
+    <string name="att_res_btn">Cancel &amp; Recapture</string>
+    <string name="att_res__register_btn">Register Now</string>
+    <string name="att_res_rejected_txt">Employee Not Found</string>
+
+    <string name="msg_sent_to_superviser">Message sent successfully to your supervisor for registering you again!</string>
+
+    <string name="ok">OK</string>
+    <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
+    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
+    <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
+
+    <string name="app_provider">com.enalytix.faceattendance.provider</string>
+
+
+    <!--    8527024131-->
 </resources>
