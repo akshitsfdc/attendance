@@ -32,4 +32,9 @@
     <color name="hint">#808080</color>
 
 
+    <color name="simpletooltip_background">@color/primary</color>
+    <color name="simpletooltip_text">@color/white</color>
+    <color name="simpletooltip_arrow">@color/primary</color>
+
+
 </resources>

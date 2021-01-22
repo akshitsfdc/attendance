@@ -8,8 +8,10 @@ public class RegisterAgainResponseActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_again_response);
+
         super.context = this;
         super.toolbar = findViewById(R.id.toolbar);
         super.setObjects();
@@ -20,4 +22,11 @@ public class RegisterAgainResponseActivity extends BaseActivity {
         super.setCurrentDate();
     }
 
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+
+        routing.navigate(EmployeeHome.class, true);
+
+    }
 }

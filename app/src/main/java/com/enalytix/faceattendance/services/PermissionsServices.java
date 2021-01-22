@@ -18,6 +18,7 @@ public class PermissionsServices {
     public static final int ACCESS_FINE_PERMISSION_CODE = 401;
     public static final int WRITE_PERMISSION_CODE = 501;
     public static final int READ_PHONE_STATE = 601;
+    public static final int CAMERA_PERMISSION_CODE = 701;
 
     public PermissionsServices(Activity context) {
         this.context = context;
@@ -47,7 +48,18 @@ public class PermissionsServices {
             context.requestPermissions(new String[]{permission_manifest}, WRITE_PERMISSION_CODE);
         }
     }
+    public void askForCameraPermission(){
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            String permission_manifest = Manifest.permission.CAMERA;
+
+            if(this.isAlreadyGranted(permission_manifest)){
+                return;
+            }
+            ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
+        }
+    }
     public void askForAccessFineLocationPermission(){
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

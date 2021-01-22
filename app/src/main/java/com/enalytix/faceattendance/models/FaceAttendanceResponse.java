@@ -2,7 +2,7 @@ package com.enalytix.faceattendance.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class AttendanceResponse {
+public class FaceAttendanceResponse {
 
 
     @SerializedName("Id")
@@ -10,10 +10,10 @@ public class AttendanceResponse {
     private boolean isFaceVisible;
     private String error;
 
-    public AttendanceResponse() {
+    public FaceAttendanceResponse() {
     }
 
-    public AttendanceResponse(String id, boolean isFaceVisible, String error) {
+    public FaceAttendanceResponse(String id, boolean isFaceVisible, String error) {
         this.setId(id);
         this.setFaceVisible(isFaceVisible);
         this.setError(error);

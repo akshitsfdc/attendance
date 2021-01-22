@@ -1,11 +1,26 @@
 package com.enalytix.faceattendance.services;
 
+import com.enalytix.faceattendance.activities.MainActivity;
 import com.enalytix.faceattendance.models.AuthRequest;
+import com.enalytix.faceattendance.models.CancelAttendanceRequest;
+import com.enalytix.faceattendance.models.CancelAttendanceResponse;
+import com.enalytix.faceattendance.models.CheckUserResponse;
+import com.enalytix.faceattendance.models.MarkAttendanceRequest;
+import com.enalytix.faceattendance.models.MarkAttendanceResponse;
+import com.enalytix.faceattendance.models.MyAttendanceRequest;
+import com.enalytix.faceattendance.models.MyAttendanceResponse;
+import com.enalytix.faceattendance.models.RegisterSelfRequest;
+import com.enalytix.faceattendance.models.RegisterSelfResponse;
+import com.enalytix.faceattendance.models.SendOTPResponse;
 import com.enalytix.faceattendance.models.UserData;
+import com.enalytix.faceattendance.utils.UIUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -48,10 +63,44 @@ public class AuthService {
         jsonPlaceHolderApi = retrofit.create(FaceAttendanceAPI.class);
     }
 
-    public Call<UserData> getUserAuthDate(String mobileNumber){
+    public Call<SendOTPResponse> getUserAuthDate(String mobileNumber){
 
         return jsonPlaceHolderApi.getUserAuthData(new AuthRequest(mobileNumber));
 
 
+    }
+    public Call<List<MarkAttendanceResponse>> markAttendance(String attendanceType, String siteCode, int submittedBy){
+
+        UIUtils uiUtils = new UIUtils();
+
+        MarkAttendanceRequest markAttendanceRequest = new MarkAttendanceRequest();
+        markAttendanceRequest.setMobileNumber(MainActivity.USER_DATA.getMobileNumber());
+        markAttendanceRequest.setSideCode(siteCode);
+        markAttendanceRequest.setAttendanceType(attendanceType);
+        markAttendanceRequest.setAttendanceDateTime(uiUtils.getCurrentTimeString());
+        markAttendanceRequest.setSubmittedBy(submittedBy);
+
+        return jsonPlaceHolderApi.markAttendance(markAttendanceRequest);
+
+    }
+
+    public Call<CheckUserResponse> checkUser(String mobileNumber){
+
+        return jsonPlaceHolderApi.checkUserData(new AuthRequest(mobileNumber));
+    }
+
+    public Call<CancelAttendanceResponse> cancelAttendance(String transactionId){
+
+        return jsonPlaceHolderApi.cancelAttendance(new CancelAttendanceRequest(transactionId));
+    }
+
+    public Call<List<RegisterSelfResponse>> registerSelf(String mobileNumber, String siteCode){
+
+        return jsonPlaceHolderApi.registerSelf(new RegisterSelfRequest(mobileNumber, siteCode));
+    }
+
+    public Call<MyAttendanceResponse> getMyAttendance(String mobileNumber, String monthYear){
+
+        return jsonPlaceHolderApi.getAttendance(new MyAttendanceRequest(mobileNumber, monthYear));
     }
 }

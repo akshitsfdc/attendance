@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.enalytix.faceattendance.R;
+import com.enalytix.faceattendance.models.SendOTPResponse;
 import com.enalytix.faceattendance.models.UserData;
 import com.enalytix.faceattendance.services.AuthService;
 import com.enalytix.faceattendance.utils.Routing;
@@ -24,22 +25,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private static final String TAG = "LoginActivity";
     private Button loginButton;
     private EditText mobileNumber;
-    private Routing routing;
-    private UIUtils uiUtils;
     private CircularProgressIndicator loadingIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        this.routing = new Routing(this);
-        this.uiUtils = new UIUtils(this, R.id.parent);
+        super.context = this;
+//        super.toolbar = findViewById(R.id.toolbar);
+        super.setObjects();
+        super.setUIUtils(R.id.parent);
 
         this.loginButton = findViewById(R.id.loginButton);
         this.mobileNumber = findViewById(R.id.mobileNumber);
@@ -96,10 +96,11 @@ public class LoginActivity extends AppCompatActivity {
         showLoading();
         AuthService authService = new AuthService();
 
+
         authService.getUserAuthDate(mobileNumber)
-                .enqueue(new Callback<UserData>() {
+                .enqueue(new Callback<SendOTPResponse>() {
                     @Override
-                    public void onResponse(Call<UserData> call, Response<UserData> response) {
+                    public void onResponse(Call<SendOTPResponse> call, Response<SendOTPResponse> response) {
 
                         hideLoading();
                         if (!response.isSuccessful()) {
@@ -107,15 +108,17 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
 
-                        UserData userData = response.body();
-                        if(userData == null){
+                        SendOTPResponse sendOTPResponse = response.body();
+                        if(sendOTPResponse == null){
                             uiUtils.showShortSnakeBar(getString(R.string.generic_error));
                             return;
                         }
-                        if(TextUtils.equals(userData.getStatus().toLowerCase(), getString(R.string.success_status))){
-                            Log.d(TAG, "onResponse: otp : "+userData.getOtp());
-                            goToOtp(mobileNumber, userData.getOtp());
-                            MainActivity.USER_DATA = userData;
+                        if(TextUtils.equals(sendOTPResponse.getStatus().toLowerCase(), getString(R.string.success_status))){
+//                            Log.d(TAG, "onResponse: otp : "+userData.getOtp());
+                            goToOtp(mobileNumber, sendOTPResponse.getOtp());
+                            setUserData(sendOTPResponse, mobileNumber);
+
+                            Log.d(TAG, "onResponse: "+MainActivity.USER_DATA.toString());
                         }else{
                             uiUtils.showShortSnakeBar(getString(R.string.otp_send_failed_mobile));
                         }
@@ -123,12 +126,21 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<UserData> call, Throwable t) {
+                    public void onFailure(Call<SendOTPResponse> call, Throwable t) {
                         uiUtils.showShortSnakeBar(getString(R.string.generic_error));
                         hideLoading();
                     }
                 });
 
+    }
+    private void setUserData(SendOTPResponse sendOTPResponse, String mobileNumber){
+
+        MainActivity.USER_DATA.setMobileNumber(mobileNumber);
+        MainActivity.USER_DATA.setEmpCode(sendOTPResponse.getEmpCode());
+        MainActivity.USER_DATA.setEmployeeId(sendOTPResponse.getEmployeeId());
+        MainActivity.USER_DATA.setThumbnail(sendOTPResponse.getThumbnail());
+        MainActivity.USER_DATA.setStaffRole(sendOTPResponse.getStaffRole());
+        MainActivity.USER_DATA.setSites(sendOTPResponse.getSites());
     }
 
     private void goToOtp(String mobileNumber, String otp){
@@ -139,14 +151,14 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void showLoading(){
-        this.loadingIndicator.setVisibility(View.VISIBLE);
-        this.loginButton.setEnabled(false);
-    }
-    private void hideLoading(){
-        this.loadingIndicator.setVisibility(View.GONE);
-        this.loginButton.setEnabled(true);
-    }
+//    private void showLoading(){
+//        this.loadingIndicator.setVisibility(View.VISIBLE);
+//        this.loginButton.setEnabled(false);
+//    }
+//    private void hideLoading(){
+//        this.loadingIndicator.setVisibility(View.GONE);
+//        this.loginButton.setEnabled(true);
+//    }
     private void hideKeyboard(){
         try {
             ((InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((this.getWindow().getDecorView().getApplicationWindowToken()), 0);

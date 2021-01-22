@@ -1,5 +1,7 @@
 package com.enalytix.faceattendance.models;
 
+import androidx.annotation.NonNull;
+
 public class Site {
 
 
@@ -7,6 +9,7 @@ public class Site {
     private String siteLatitude;
     private String siteLongitude;
     private String siteName;
+    private float geocodingArea;
 
     public Site() {
     }
@@ -42,5 +45,19 @@ public class Site {
 
     public void setSiteName(String siteName) {
         this.siteName = siteName;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return " SiteCode: "+this.getSiteCode()+" SiteLatitude: "+this.getSiteLatitude()+" SiteLongitude: "+this.getSiteLongitude()+" SiteName: "+this.getSiteName();
+    }
+
+    public float getGeocodingArea() {
+        return geocodingArea;
+    }
+
+    public void setGeocodingArea(float geocodingArea) {
+        this.geocodingArea = geocodingArea;
     }
 }

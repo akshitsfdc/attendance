@@ -247,9 +247,9 @@
                         <ImageView
                             android:id="@+id/myAttLogoImage"
                             android:layout_centerInParent="true"
-                            android:layout_width="@dimen/emp_home_att_logo_size"
-                            android:layout_height="@dimen/emp_home_att_logo_size"
-                            android:src="@drawable/group_icon_png"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_attendence"
                             />
                     </RelativeLayout>
 
@@ -272,11 +272,23 @@
 
 
 
+
             </RelativeLayout>
 
 
 
         </androidx.cardview.widget.CardView>
-
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/loadingIndicator"
+            android:visibility="gone"
+            android:layout_marginBottom="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:indeterminate="true"
+            app:showAnimationBehavior="outward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
+
+
 </RelativeLayout>

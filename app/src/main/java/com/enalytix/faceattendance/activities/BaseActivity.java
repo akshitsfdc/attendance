@@ -9,6 +9,9 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -28,6 +31,8 @@ import java.util.Calendar;
 import java.util.List;
 
 public class BaseActivity extends AppCompatActivity {
+
+    protected static String TAG = "BaseActivity";
 
     protected Routing routing;
     protected FileUtils fileUtils;
@@ -49,14 +54,22 @@ public class BaseActivity extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getSupportActionBar().hide();
+        if(getSupportActionBar() != null){
+//            requestFeature()
+//            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            getSupportActionBar().hide();
+        }
+
 
 
 
     }
     protected void setObjects(){
-        toolbar.setOverflowIcon(ContextCompat.getDrawable(context, R.drawable.ic_menu_overflow));
+
+        if(toolbar != null){
+            toolbar.setOverflowIcon(ContextCompat.getDrawable(context, R.drawable.ic_menu_overflow));
+        }
+        TAG = context.getLocalClassName();
         routing = new Routing(context);
         fileUtils = new FileUtils(context);
     }
@@ -105,6 +118,10 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+    protected void setCustomTitle(String title){
+        ((TextView)context.findViewById(R.id.siteTitle)).setText(title);
+    }
+
     protected void setCurrentDate(){
 
         Calendar calendar = Calendar.getInstance();
@@ -137,5 +154,24 @@ public class BaseActivity extends AppCompatActivity {
 
 
     }
+
+    protected void showLoading(){
+        context.findViewById(R.id.loadingIndicator).setVisibility(View.VISIBLE);
+    }
+    protected void hideLoading(){
+        context.findViewById(R.id.loadingIndicator).setVisibility(View.GONE);
+    }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        Log.d(TAG, "onOptionsItemSelected: "+item);
+//        switch (item.getItemId()) {
+//            case R.id.logout:
+//                fileUtils.saveUserDataInSharedPre(null);
+//                return true;
+//            default:
+//                return true;
+//        }
+//    }
 
 }

@@ -189,6 +189,7 @@
 
                         />
                     <TextView
+                        android:id="@+id/scanningText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/re_att_progress_text"
@@ -239,6 +240,15 @@
 
 
 
+<!--        <ImageView-->
+<!--            android:id="@+id/tempImage"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_marginBottom="60dp"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            />-->
 
     </RelativeLayout>
 </RelativeLayout>

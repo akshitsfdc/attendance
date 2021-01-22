@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.File;
 
-public class AttendanceRequest {
+public class FaceAttendanceRequest {
 
     private byte[] file;
     private String id;
@@ -12,13 +12,13 @@ public class AttendanceRequest {
     @SerializedName("siteid")
     private String siteId;
 
-    public AttendanceRequest(byte[] file, String id, String siteId) {
+    public FaceAttendanceRequest(byte[] file, String id, String siteId) {
         this.file = file;
         this.id = id;
         this.siteId = siteId;
     }
 
-    public AttendanceRequest() {
+    public FaceAttendanceRequest() {
     }
 
 

@@ -33,6 +33,18 @@ public class Routing {
         }
     }
 
+    public <T> void navigateAndClear(Class<T> next){
+
+        Intent i = new Intent(activity, next);
+        i.putExtras(bundle);
+
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        activity.startActivity(i);
+
+        activity.finish();
+    }
+
     public void clearParams(){
         this.bundle.clear();
     }

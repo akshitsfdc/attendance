@@ -12,6 +12,7 @@
     <string name="invalid_mobile_des">Please enter a valid 10 digit mobile number</string>
     <string name="invalid_mobile">Invalid mobile number</string>
     <string name="otp_send_failed_mobile">Failed to send you OTP at this moment.Please check your number or contact your supervisor</string>
+    <string name="otp_inactive_user">This user is not active please login again</string>
     <!-- OTP -->
     <string name="otp__label">Verification Code</string>
     <string name="otp_text_desc">Please enter OTP sent to </string>
@@ -21,6 +22,7 @@
     <string name="otp_invalid">Invalid OTP please try again</string>
 
     <string name="success_status">success</string>
+    <string name="active_status">active</string>
 
     <string name="generic_error">Something went wrong please try again later</string>
     <string name="application_key">SFALGSAI421KFSAFSGSSGWQRWWTW</string>
@@ -40,6 +42,7 @@
 
     <!--    record attendance-->
     <string name="re_att_progress_text">Scanning…</string>
+    <string name="re_att_attending_text">Marking Attendance…</string>
     <string name="re_att_capture_button">Capture</string>
     <string name="re_att_face_not_visible">Your face was not properly visible. Please try again</string>
 
@@ -65,5 +68,43 @@
     <string name="app_provider">com.enalytix.faceattendance.provider</string>
 
 
+
+
+    <!--    supervisor Home-->
+    <string name="super_home_record_att_label">Record Employee Attendance</string>
+    <string name="super_home_manage_emp">Manage Employees</string>
+    <string name="super_home_dashboard_emp">Employee Dashboard</string>
+    <string name="super_home_check_in">Check In</string>
+    <string name="super_home_check_out">Check Out</string>
+
+
+
+    <string name="temp_number">8527024131</string>
+
+
+    <string name="month_prompt">Month</string>
+
+    <string-array name="months_arrays">
+        <item>JAN</item>
+        <item>FEB</item>
+        <item>MAR</item>
+        <item>APR</item>
+        <item>MAY</item>
+        <item>JUN</item>
+        <item>JUL</item>
+        <item>AUG</item>
+        <item>SEP</item>
+        <item>OCT</item>
+        <item>NOV</item>
+        <item>DEC</item>
+    </string-array>
+
+
+    <string name="year_prompt">Year</string>
+
+    <string-array name="years_arrays">
+        <item>2020</item>
+        <item>2021</item>
+    </string-array>
     <!--    8527024131-->
 </resources>

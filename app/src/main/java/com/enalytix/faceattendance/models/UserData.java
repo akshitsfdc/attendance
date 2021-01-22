@@ -1,5 +1,9 @@
 package com.enalytix.faceattendance.models;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 public class UserData {
@@ -11,19 +15,10 @@ public class UserData {
     private String otp;
     private String staffRole;
     private ArrayList<Site> sites;
-
+    private int attendanceTry;
+    private String mobileNumber;
 
     public UserData() {
-    }
-
-    public UserData(String status, String employeeId,String empCode, String thumbnail, String otp, String staffRole, ArrayList<Site> sites) {
-        this.setStatus(status);
-        this.setEmployeeId(employeeId);
-        this.setEmpCode(empCode);
-        this.setThumbnail(thumbnail);
-        this.setOtp(otp);
-        this.setStaffRole(staffRole);
-        this.setSites(sites);
     }
 
     public String getStatus() {
@@ -80,5 +75,30 @@ public class UserData {
 
     public void setEmpCode(String empCode) {
         this.empCode = empCode;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+
+        return "toString: Status : "+this.getStatus()+" Otp: "+this.getOtp()
+                +" EmpCode: "+this.getEmpCode()+" EmployeeId: "+this.getEmployeeId()+" StaffRole: "+this.getStaffRole()+" Thumbnail: "+this.getThumbnail()
+                +" siteIds; "+this.getSites();
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public int getAttendanceTry() {
+        return attendanceTry;
+    }
+
+    public void setAttendanceTry(int attendanceTry) {
+        this.attendanceTry = attendanceTry;
     }
 }

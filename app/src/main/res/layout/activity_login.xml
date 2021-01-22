@@ -64,6 +64,7 @@
                 app:boxStrokeColor="@color/primary"
                 app:hintEnabled="true"
                 android:textColorHint="@color/hint"
+                android:visibility="gone"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText

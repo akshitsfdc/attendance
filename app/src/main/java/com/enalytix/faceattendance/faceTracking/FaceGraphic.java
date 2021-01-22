@@ -22,8 +22,11 @@ import android.util.Log;
 
 
 import com.enalytix.faceattendance.R;
+import com.enalytix.faceattendance.activities.RecordAttendanceActivity;
 import com.enalytix.faceattendance.camera.GraphicOverlay;
 import com.google.android.gms.vision.face.Face;
+
+import static java.lang.Math.ceil;
 
 /**
  * Graphic instance for rendering face position, orientation, and landmarks within an associated
@@ -37,16 +40,17 @@ public class FaceGraphic extends GraphicOverlay.Graphic {
     private static final float ID_TEXT_SIZE = 40.0f;
     private static final float ID_Y_OFFSET = 50.0f;
     private static final float ID_X_OFFSET = -50.0f;
-    private static final float BOX_STROKE_WIDTH = 5.0f;
+    private static final float BOX_STROKE_WIDTH = 8.0f;
 
     private static final int COLOR_CHOICES[] = {
-        Color.BLUE,
-        Color.CYAN,
-        Color.GREEN,
-        Color.MAGENTA,
-        Color.RED,
-        Color.WHITE,
-        Color.YELLOW
+//        Color.BLUE,
+//        Color.CYAN,
+//        Color.GREEN,
+//        Color.MAGENTA,
+//        Color.RED,
+//        Color.WHITE,
+//        Color.YELLOW,
+            R.color.primary
     };
     private static int mCurrentColorIndex = 0;
 
@@ -63,8 +67,8 @@ public class FaceGraphic extends GraphicOverlay.Graphic {
         super(overlay);
 
 
-        mCurrentColorIndex = (mCurrentColorIndex + 1) % COLOR_CHOICES.length;
-        final int selectedColor =  COLOR_CHOICES[mCurrentColorIndex];
+//        mCurrentColorIndex = (mCurrentColorIndex + 1) % COLOR_CHOICES.length;
+        final int selectedColor = COLOR_CHOICES[0]; //COLOR_CHOICES[mCurrentColorIndex];
 
         mFacePositionPaint = new Paint();
         mFacePositionPaint.setColor(selectedColor);
@@ -122,9 +126,14 @@ public class FaceGraphic extends GraphicOverlay.Graphic {
 
 //        Log.d(TAG, "draw: >> left >> "+left+" top >> "+top+" right >> "+right+" bottom >> "+bottom);
 
+        RecordAttendanceActivity.faceCoordinates.left = (int)ceil(left);
+        RecordAttendanceActivity.faceCoordinates.top = (int)ceil(top);
+        RecordAttendanceActivity.faceCoordinates.right = (int)ceil(right);
+        RecordAttendanceActivity.faceCoordinates.bottom = (int)ceil(bottom);
         if(left > 0 && top > 0){
             canvas.drawCircle(x, y, FACE_POSITION_RADIUS, mFacePositionPaint);
-            canvas.drawRect(left, top, right, bottom, mBoxPaint);
+//            canvas.drawRect(left, top, right, bottom, mBoxPaint);
+            canvas.drawRoundRect((int)ceil(left), (int)ceil(top), (int)ceil(right), (int)ceil(bottom), 50, 50, mBoxPaint);
         }
 
     }

@@ -84,4 +84,13 @@
     <dimen name="app_button_height">60dp</dimen>
 
 
+    <dimen name="simpletooltip_max_width">100dp</dimen>
+    <dimen name="simpletooltip_overlay_offset">5dp</dimen>
+    <dimen name="simpletooltip_margin">10dp</dimen>
+    <dimen name="simpletooltip_padding">5dp</dimen>
+    <dimen name="simpletooltip_arrow_width">16dp</dimen>
+    <dimen name="simpletooltip_arrow_height">8dp</dimen>
+    <dimen name="simpletooltip_animation_padding">4dp</dimen>
+
+
 </resources>

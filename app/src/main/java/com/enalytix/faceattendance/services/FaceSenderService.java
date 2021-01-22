@@ -1,25 +1,18 @@
 package com.enalytix.faceattendance.services;
 
 import android.app.Activity;
-import android.net.Uri;
-import android.util.Log;
 
-import com.enalytix.faceattendance.models.AttendanceRequest;
-import com.enalytix.faceattendance.models.AttendanceResponse;
+import com.enalytix.faceattendance.models.FaceAttendanceResponse;
 import com.enalytix.faceattendance.models.AuthRequest;
-import com.enalytix.faceattendance.models.UserData;
-import com.enalytix.faceattendance.utils.FileUtils;
+import com.enalytix.faceattendance.models.SendOTPResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -72,14 +65,14 @@ public class FaceSenderService {
     }
 
 
-    public Call<UserData> getUserAuthDate(String mobileNumber){
+    public Call<SendOTPResponse> getUserAuthDate(String mobileNumber){
 
 
         return jsonPlaceHolderApi.getUserAuthData(new AuthRequest(mobileNumber));
 
 
     }
-    public Call<AttendanceResponse> registerUser(File fileObj, String userId, String siteId){
+    public Call<FaceAttendanceResponse> registerUser(File fileObj, String userId, String siteId){
 
         RequestBody fbody = RequestBody.create(fileObj,MediaType.parse("image/*"));
 
@@ -89,6 +82,15 @@ public class FaceSenderService {
         RequestBody siteid = RequestBody.create(siteId, MediaType.parse("text/plain"));
 
         return jsonPlaceHolderApi.registerUserByFace(fbody, id, siteid);
+    }
+
+    public Call<FaceAttendanceResponse> validateUser(File fileObj, String siteId){
+
+        RequestBody fbody = RequestBody.create(fileObj,MediaType.parse("image/*"));
+
+        RequestBody siteid = RequestBody.create(siteId, MediaType.parse("text/plain"));
+
+        return jsonPlaceHolderApi.validateByFace(fbody, siteid);
     }
 
 //    public Call<AttendanceResponse> registerUser(File file, String id, String siteId){

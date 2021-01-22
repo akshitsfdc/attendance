@@ -1,7 +1,5 @@
 package com.enalytix.faceattendance.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -16,10 +14,9 @@ import android.widget.TextView;
 
 import com.enalytix.faceattendance.R;
 import com.enalytix.faceattendance.helper.GenericTextWatcher;
-import com.enalytix.faceattendance.models.UserData;
+import com.enalytix.faceattendance.models.CheckUserResponse;
+import com.enalytix.faceattendance.models.SendOTPResponse;
 import com.enalytix.faceattendance.services.AuthService;
-import com.enalytix.faceattendance.utils.Routing;
-import com.enalytix.faceattendance.utils.UIUtils;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import java.util.Locale;
@@ -29,7 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class OTPActivity extends AppCompatActivity {
+public class OTPActivity extends BaseActivity {
 
     private static final long START_TIME_IN_MILLIS = 60000;
 
@@ -37,8 +34,6 @@ public class OTPActivity extends AppCompatActivity {
 
     private EditText otp_textbox_one, otp_textbox_two, otp_textbox_three, otp_textbox_four, otp_textbox_five;
     private Button verifyButton;
-    private UIUtils uiUtils;
-    private Routing routing;
     private TextView desText;
     private TextView resend;
     private String otp;
@@ -54,8 +49,11 @@ public class OTPActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_o_t_p);
 
-        uiUtils = new UIUtils(this, R.id.parent);
-        routing = new Routing(this);
+        super.context = this;
+//        super.toolbar = findViewById(R.id.toolbar);
+        super.setObjects();
+        super.setUIUtils(R.id.parent);
+
 
         otp_textbox_one = findViewById(R.id.otp_edit_box1);
         otp_textbox_two = findViewById(R.id.otp_edit_box2);
@@ -134,13 +132,57 @@ public class OTPActivity extends AppCompatActivity {
         }
 
         if(TextUtils.equals(getFullOtpEntered(), this.otp)){
-           this.routing.navigate(EmployeeHome.class, true);
+//           this.routing.navigate(EmployeeHome.class, true);
+            checkUser();
         }else {
             this.uiUtils.showShortSnakeBar(getString(R.string.otp_invalid));
         }
 
     }
 
+    private void checkUser(){
+        showLoadingIndicator();
+        AuthService authService = new AuthService();
+
+        authService.checkUser(mobileNumber)
+                .enqueue(new Callback<CheckUserResponse>() {
+                    @Override
+                    public void onResponse(Call<CheckUserResponse> call, Response<CheckUserResponse> response) {
+
+                        hideLoadingIndicator();
+                        if (!response.isSuccessful()) {
+                            uiUtils.showShortSnakeBar(getString(R.string.otp_send_failed_mobile));
+                            return;
+                        }
+
+                        CheckUserResponse checkUserResponse = response.body();
+                        if(checkUserResponse == null){
+                            uiUtils.showShortSnakeBar(getString(R.string.generic_error));
+                            return;
+                        }
+                        if(TextUtils.equals(checkUserResponse.getStatus().toLowerCase(), getString(R.string.active_status))){
+                            setFinalUserData(checkUserResponse);
+                            if( !fileUtils.saveUserDataInSharedPre(MainActivity.USER_DATA)){
+                                Log.d(TAG, "onResponse: saveUserDataInSharedPre : failed "+MainActivity.USER_DATA.toString());
+                            }
+
+                            routing.navigateAndClear(EmployeeHome.class);
+
+                        }else{
+                            routing.navigateAndClear(LoginActivity.class);
+                            uiUtils.showShortSnakeBar(getString(R.string.otp_inactive_user));
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<CheckUserResponse> call, Throwable t) {
+                        uiUtils.showShortSnakeBar(getString(R.string.generic_error));
+                        hideLoadingIndicator();
+                    }
+                });
+
+    }
     private String getFullOtpEntered(){
 
         String t1 = otp_textbox_one.getText().toString().trim();
@@ -172,26 +214,32 @@ public class OTPActivity extends AppCompatActivity {
 
     private void resendOTP(String mobileNumber){
 
-        showLoading();
+        showLoadingIndicator();
         AuthService authService = new AuthService();
 
         authService.getUserAuthDate(mobileNumber)
-                .enqueue(new Callback<UserData>() {
+                .enqueue(new Callback<SendOTPResponse>() {
                     @Override
-                    public void onResponse(Call<UserData> call, Response<UserData> response) {
+                    public void onResponse(Call<SendOTPResponse> call, Response<SendOTPResponse> response) {
 
-                        hideLoading();
+                        hideLoadingIndicator();
                         if (!response.isSuccessful()) {
                             uiUtils.showShortSnakeBar(getString(R.string.otp_send_failed_mobile));
                             return;
                         }
-                        UserData userData = response.body();
 
-                        if(TextUtils.equals(userData.getStatus().toLowerCase(), getString(R.string.success_status))){
-                            Log.d(TAG, "onResponse: otp : "+userData.getOtp());
-//                          goToOtp(mobileNumber, userData.getOtp());
-                            otp = userData.getOtp();
+                        SendOTPResponse sendOTPResponse = response.body();
+                        if(sendOTPResponse == null){
+                            uiUtils.showShortSnakeBar(getString(R.string.generic_error));
+                            return;
+                        }
+                        if(TextUtils.equals(sendOTPResponse.getStatus().toLowerCase(), getString(R.string.success_status))){
+//                            Log.d(TAG, "onResponse: otp : "+userData.getOtp());
+                            otp = sendOTPResponse.getOtp();
+                            setUserData(sendOTPResponse, mobileNumber);
+
                             startTimer();
+
                         }else{
                             uiUtils.showShortSnakeBar(getString(R.string.otp_send_failed_mobile));
                             resend.setEnabled(true);
@@ -200,21 +248,38 @@ public class OTPActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<UserData> call, Throwable t) {
+                    public void onFailure(Call<SendOTPResponse> call, Throwable t) {
                         uiUtils.showShortSnakeBar(getString(R.string.generic_error));
                         resend.setEnabled(true);
-                        hideLoading();
+                        hideLoadingIndicator();
                     }
                 });
 
+
     }
 
-    private void showLoading(){
+    private void setUserData(SendOTPResponse sendOTPResponse, String mobileNumber){
+
+        MainActivity.USER_DATA.setMobileNumber(mobileNumber);
+        MainActivity.USER_DATA.setEmpCode(sendOTPResponse.getEmpCode());
+        MainActivity.USER_DATA.setEmployeeId(sendOTPResponse.getEmployeeId());
+        MainActivity.USER_DATA.setThumbnail(sendOTPResponse.getThumbnail());
+        MainActivity.USER_DATA.setStaffRole(sendOTPResponse.getStaffRole());
+        MainActivity.USER_DATA.setSites(sendOTPResponse.getSites());
+    }
+
+    private void setFinalUserData(CheckUserResponse checkUserResponse){
+        MainActivity.USER_DATA.setStatus(checkUserResponse.getStatus());
+        MainActivity.USER_DATA.setSites(checkUserResponse.getSites());
+        MainActivity.USER_DATA.setStaffRole(checkUserResponse.getStaffRole());
+    }
+
+    private void showLoadingIndicator(){
         this.loadingIndicator.setVisibility(View.VISIBLE);
         this.verifyButton.setEnabled(false);
         this.resend.setEnabled(false);
     }
-    private void hideLoading(){
+    private void hideLoadingIndicator(){
         this.loadingIndicator.setVisibility(View.GONE);
         this.verifyButton.setEnabled(true);
 
@@ -247,4 +312,7 @@ public class OTPActivity extends AppCompatActivity {
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         mTextViewCountDown.setText(timeLeftFormatted);
     }
+
+
+
 }

@@ -1,12 +1,8 @@
 package com.enalytix.faceattendance.activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
@@ -19,35 +15,28 @@ import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.enalytix.faceattendance.R;
 import com.enalytix.faceattendance.camera.CameraSourcePreview;
 import com.enalytix.faceattendance.camera.GraphicOverlay;
 import com.enalytix.faceattendance.faceTracking.BoxDetector;
 
 import com.enalytix.faceattendance.faceTracking.FaceGraphic;
-import com.enalytix.faceattendance.models.AttendanceResponse;
-import com.enalytix.faceattendance.models.Site;
+import com.enalytix.faceattendance.helper.FaceCoordinates;
+import com.enalytix.faceattendance.models.FaceAttendanceResponse;
+import com.enalytix.faceattendance.models.MarkAttendanceResponse;
+import com.enalytix.faceattendance.services.AuthService;
 import com.enalytix.faceattendance.services.FaceSenderService;
 import com.enalytix.faceattendance.services.PermissionsServices;
-import com.enalytix.faceattendance.utils.FileUtils;
-import com.enalytix.faceattendance.utils.Routing;
-import com.enalytix.faceattendance.utils.UIUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -87,6 +76,7 @@ public class RecordAttendanceActivity extends BaseActivity {
 
     private static final String TAG = "RecordAttendance";
 
+    private TextView scanningText;
     private ImageView profilePicture;
     private TextView siteTitle;
     private Button captureButton, cancelButton;
@@ -119,6 +109,9 @@ public class RecordAttendanceActivity extends BaseActivity {
 
     private CardView labelCard;
     private RelativeLayout buttonContainer;
+
+    public static FaceCoordinates faceCoordinates;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,14 +123,16 @@ public class RecordAttendanceActivity extends BaseActivity {
         super.setUIUtils(R.id.preview);
 
         super.setThumbnail();
-        super.setTitle();
+//        super.setTitle();
 
+        faceCoordinates = new FaceCoordinates();
         permissionsServices = new PermissionsServices(this);
 
         captureButton = findViewById(R.id.captureButton);
         cancelButton = findViewById(R.id.cancelButton);
         labelCard =  findViewById(R.id.labelCard);
         buttonContainer = findViewById(R.id.buttonContainer);
+        scanningText = findViewById(R.id.scanningText);
 
         progressContainer = findViewById(R.id.progressContainer);
         progressIndicator = findViewById(R.id.progressIndicator);
@@ -159,8 +154,8 @@ public class RecordAttendanceActivity extends BaseActivity {
         mGraphicOverlay = (GraphicOverlay) findViewById(R.id.faceOverlay);
 
         int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
-        permissionsServices.askForReadPermission();
-        permissionsServices.askForWritePermission();
+//        permissionsServices.askForReadPermission();
+//        permissionsServices.askForWritePermission();
 
         if (rc == PackageManager.PERMISSION_GRANTED) {
             createCameraSource();
@@ -168,7 +163,10 @@ public class RecordAttendanceActivity extends BaseActivity {
             requestCameraPermission();
         }
 
-
+        String title = (String)routing.getParam("siteName");
+        if(title != null){
+            super.setCustomTitle(title);
+        }
     }
 
     @Override
@@ -183,28 +181,118 @@ public class RecordAttendanceActivity extends BaseActivity {
         ignoreResult = true;
     }
 
+    private void startScanningImage(){
+        activateScanning();
+        startScanningTimer();
+    }
     private void captureClicked() {
+
+
 
         mCameraSource.takePicture(null, new CameraSource.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] bytes) {
 
-                activateScanning();
-                startScanningTimer();
-                setImage();
+                startScanningImage();
 
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                Matrix matrix = new Matrix();
+                matrix.postRotate(-90);
+
+                Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+                Bitmap finalBitmap = getMirrorBitmap(rotatedBitmap);
+
+                FirebaseVisionImage image = getVisionImage(finalBitmap);
+                FirebaseVisionFaceDetector firebaseVisionFaceDetector = getVisionFaceDetector();
+
+                getDetectTask(firebaseVisionFaceDetector, image)
+                        .addOnSuccessListener(
+                                new OnSuccessListener<List<FirebaseVisionFace>>() {
+                                    @Override
+                                    public void onSuccess(List<FirebaseVisionFace> faces) {
+                                        Log.d(TAG, "onSuccess: faces outside D5675 >> "+faces.size());
+
+                                        if (faces.size() > 0) {
+
+                                            Log.d(TAG, "onSuccess: faces inside D5675 >> "+faces.size());
+
+                                            FirebaseVisionFace face = faces.get(0);
+                                            // If contour detection was enabled:
+                                            List<FirebaseVisionPoint> leftEyeContour =
+                                                    face.getContour(FirebaseVisionFaceContour.LEFT_EYE).getPoints();
+                                            List<FirebaseVisionPoint> upperLipBottomContour =
+                                                    face.getContour(FirebaseVisionFaceContour.UPPER_LIP_BOTTOM).getPoints();
+
+
+                                            try {
+
+                                                int left = face.getBoundingBox().left;
+                                                int top = face.getBoundingBox().top;
+
+
+                                                Bitmap faceBitmap = Bitmap.createBitmap(finalBitmap, left, top,
+                                                        face.getBoundingBox().width(), face.getBoundingBox().height());
+
+                                                File file = getSavedFile("xyz", faceBitmap);
+                                                if(file != null){
+                                                    recognizeFace(file);
+                                                }else {
+                                                    uiUtils.showShortSnakeBar("Opps... We missed your face! Try one more time.");
+                                                    stopScanningImage();
+                                                }
+
+//                                                ((ImageView)findViewById(R.id.tempImage)).setImageBitmap(faceBitmap);
+
+                                            }catch (Exception e){
+
+                                                e.printStackTrace();
+
+                                                uiUtils.showShortSnakeBar("Opps... We missed your face! Try one more time.");
+                                                stopScanningImage();
+
+                                            }
+
+                                        }else {
+                                            uiUtils.showShortSnakeBar("Opps... We missed your face! Try one more time.");
+                                            stopScanningImage();
+                                        }
+                                    }
+                                })
+                        .addOnFailureListener(
+                                new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // Task failed with an exception
+                                        Log.d(TAG, "onFailure: " + e.getMessage());
+                                        uiUtils.showShortSnakeBar("Opps... We missed your face! Try one more time.");
+                                        stopScanningImage();
+                                        // ...
+                                    }
+                                });
             }
         });
     }
 
+    private Bitmap getMirrorBitmap(Bitmap bitmap)
+    {
+        Matrix m = new Matrix();
+        m.preScale(-1, 1);
+        Bitmap dst = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, false);
+        dst.setDensity(DisplayMetrics.DENSITY_DEFAULT);
+        return dst;
+    }
+
     private void activateScanning() {
         captureButton.setVisibility(View.GONE);
+        cancelButton.setVisibility(View.GONE);
         progressContainer.setVisibility(View.VISIBLE);
 
     }
 
     private void deactivateScanning() {
         captureButton.setVisibility(View.VISIBLE);
+        cancelButton.setVisibility(View.VISIBLE);
         progressContainer.setVisibility(View.GONE);
     }
 
@@ -262,11 +350,11 @@ public class RecordAttendanceActivity extends BaseActivity {
 
 
         FaceDetector detector = new FaceDetector.Builder(context).setTrackingEnabled(true) //can be false too
-                .setLandmarkType(FaceDetector.CONTOUR_LANDMARKS)
+//                .setLandmarkType(FaceDetector.CONTOUR_LANDMARKS)
                 .setMode(FaceDetector.SELFIE_MODE)
                 .setProminentFaceOnly(true)
-//                .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
-//                .setProminentFaceOnly(true)
+                .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
+                .setProminentFaceOnly(true)
                 .build();
 
         BoxDetector myFaceDetector = new BoxDetector(detector);
@@ -279,10 +367,10 @@ public class RecordAttendanceActivity extends BaseActivity {
 
         mCameraSource = new CameraSource.Builder(context, myFaceDetector)
                 .setRequestedPreviewSize(getDisplayWidth(), getDisplayheight())
-//                .setRequestedPreviewSize( 1280, 1024)
+//                .setRequestedPreviewSize( getDisplayWidth(), getDisplayWidth())
                 .setFacing(CameraSource.CAMERA_FACING_FRONT)
                 .setAutoFocusEnabled(true)
-                .setRequestedFps(40.0f)
+                .setRequestedFps(30.0f)
                 .build();
 
 
@@ -408,9 +496,9 @@ public class RecordAttendanceActivity extends BaseActivity {
         public void onUpdate(FaceDetector.Detections<Face> detectionResults, Face face) {
 
 
-            if (face.getPosition().x < 0 || face.getPosition().y < 0) {
-                hideButton();
-            }
+//            if (face.getPosition().x < 0 || face.getPosition().y < 0) {
+//                hideButton();
+//            }
             if (assignFace) {
                 myFace = face;
             }
@@ -444,7 +532,11 @@ public class RecordAttendanceActivity extends BaseActivity {
         public void onMissing(FaceDetector.Detections<Face> detectionResults) {
 
             mOverlay.remove(mFaceGraphic);
-            hideButton();
+
+            if(progressContainer.getVisibility() != View.VISIBLE){
+                hideButton();
+            }
+
 //            mpAlert.start();
 //            Log.d(TAG, "onNewItem: left >> onMissing gone");
         }
@@ -468,63 +560,32 @@ public class RecordAttendanceActivity extends BaseActivity {
 
 
     private void setImage() {
+        assignFace = false;
+//        Bitmap bitmap = getBitmap(currentFrame.getGrayscaleImageData());
 
-        Bitmap bitmap = getBitmap(currentFrame.getGrayscaleImageData());
-
-        if (bitmap == null) {
-            deactivateScanning();
-            stopScanningTimer();
-            return;
-        }
-        try {
-            assignFace = false;
-//            screenImage.setImageBitmap(bitmap);
-            assignFace = true;
-        } catch (Exception e) {
-            Toast.makeText(this, "It looks like you went out of frame !",
-                    Toast.LENGTH_LONG).show();
-            deactivateScanning();
-            stopScanningTimer();
-            assignFace = true;
-        }
-        FirebaseVisionImage image = getVisionImage(bitmap);
-        FirebaseVisionFaceDetector firebaseVisionFaceDetector = getVisionFaceDetector();
-
-        getDetectTask(firebaseVisionFaceDetector, image)
-                .addOnSuccessListener(
-                        new OnSuccessListener<List<FirebaseVisionFace>>() {
-                            @Override
-                            public void onSuccess(List<FirebaseVisionFace> faces) {
-//                                Log.d(TAG, "onSuccess: faces >> "+faces.size());
-
-                                if (faces.size() > 0) {
-
-                                    FirebaseVisionFace face = faces.get(0);
-
-                                    // If contour detection was enabled:
-                                    List<FirebaseVisionPoint> leftEyeContour =
-                                            face.getContour(FirebaseVisionFaceContour.LEFT_EYE).getPoints();
-                                    List<FirebaseVisionPoint> upperLipBottomContour =
-                                            face.getContour(FirebaseVisionFaceContour.UPPER_LIP_BOTTOM).getPoints();
+//        if (bitmap == null) {
+//            deactivateScanning();
+//            stopScanningTimer();
+//            assignFace = true;
+//            return;
+//        }
+//        try {
 //
-//                                    Log.d(TAG, "onSuccess:  >>> leftEyeContour >> "+leftEyeContour.toString());
-//                                    Log.d(TAG, "onSuccess:  >>> upperLipBottomContour >> "+upperLipBottomContour.toString());
-                                }
-                            }
-                        })
-                .addOnFailureListener(
-                        new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // Task failed with an exception
-                                Log.d(TAG, "onFailure: " + e.getMessage());
-                                deactivateScanning();
-                                stopScanningTimer();
-                                // ...
-                            }
-                        });
-        File file = getSavedFile("xyz", bitmap);
-        makeAttendanceCall(file, bitmap);
+////            screenImage.setImageBitmap(bitmap);
+////            assignFace = true;
+//        } catch (Exception e) {
+//            Toast.makeText(this, "It looks like you went out of frame !",
+//                    Toast.LENGTH_LONG).show();
+//            deactivateScanning();
+//            stopScanningTimer();
+//            assignFace = true;
+//        }
+
+
+//        ((ImageView)findViewById(R.id.tempImage)).setImageBitmap(bitmap);
+       // File file = getSavedFile("xyz", bitmap);
+       // makeAttendanceCall(file, bitmap);
+//        assignFace = true;
     }
 
     Bitmap getBitmap(ByteBuffer byteBuffer) {
@@ -534,17 +595,25 @@ public class RecordAttendanceActivity extends BaseActivity {
 
         Bitmap rotatedBitmap;
 
-        int left = (int) face.getPosition().x;
-        int top = (int) face.getPosition().y;
-        int right = (int) face.getWidth() + left;
-        int bottom = (int) face.getHeight() + top;
+//        int left = (int) myFace.getPosition().x;
+//        int top = (int) myFace.getPosition().y;
+//        int right = (int) myFace.getWidth() + left;
+//        int bottom = (int) myFace.getHeight() + top;
+
+        int left = faceCoordinates.left;
+        int top = faceCoordinates.top;
+        int right = faceCoordinates.right;
+        int bottom = faceCoordinates.bottom;
+
+
 
         int height = currentFrame.getMetadata().getHeight();
         int width = currentFrame.getMetadata().getWidth();
 
-//        Log.d(TAG, "getBitmap: left >>"+left+" top >> "+top+" right >> "+" bottom >>"+bottom);
+
+        Log.d(TAG, "getBitmap: left >>"+left+" top >> "+top+" right >> "+right+" bottom >>"+bottom);
 //
-//        Log.d(TAG, "getBitmap: currentFrame >> height >> "+height+" width >> "+width);
+        Log.d(TAG, "getBitmap: currentFrame >> height >> "+height+" width >> "+width);
 
 
         try {
@@ -553,6 +622,7 @@ public class RecordAttendanceActivity extends BaseActivity {
             YuvImage yuvimage = new YuvImage(byteBuffer.array(), ImageFormat.NV21, width,
                     height, null);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
             yuvimage.compressToJpeg(new Rect(left, top, right,
                     bottom), 100, baos); // Where 100 is the quality of the generated jpeg
             byte[] jpegArray = baos.toByteArray();
@@ -563,6 +633,7 @@ public class RecordAttendanceActivity extends BaseActivity {
             matrix.postRotate(-90);
 
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, width, height, true);
+//            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, width, height, true);
 
 
             rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
@@ -573,6 +644,7 @@ public class RecordAttendanceActivity extends BaseActivity {
             stopScanningTimer();
             return null;
         }
+
         return rotatedBitmap;
     }
 
@@ -585,7 +657,9 @@ public class RecordAttendanceActivity extends BaseActivity {
 
         FirebaseVisionFaceDetectorOptions realTimeOpts =
                 new FirebaseVisionFaceDetectorOptions.Builder()
-                        .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
+                        .setPerformanceMode(FirebaseVisionFaceDetectorOptions.ACCURATE)
+                        .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
+                        .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
                         .build();
 
         FirebaseVisionFaceDetector detector = FirebaseVision.getInstance()
@@ -664,58 +738,121 @@ public class RecordAttendanceActivity extends BaseActivity {
         return null;
     }
 
-    private void makeAttendanceCall(File file, Bitmap bitmap) {
+    private void recognizeFace(File file) {
 
         FaceSenderService faceSenderService = new FaceSenderService(this);
 
-        faceSenderService.registerUser(file, "8888985133_rajput", "noida_2565")
-        .enqueue(new Callback<AttendanceResponse>() {
-            @Override
-            public void onResponse(Call<AttendanceResponse> call, Response<AttendanceResponse> response) {
-                Log.d(TAG, "onResponse: >> AttendanceResponse : ");
+        String title = (String)routing.getParam("siteName");
+        routing.appendParams("siteName", title);
 
-                if(ignoreResult){
-                    return;
-                }
+        String siteCode = (String)routing.getParam("siteCode");
+
+        faceSenderService.validateUser(file, siteCode)
+        .enqueue(new Callback<FaceAttendanceResponse>() {
+            @Override
+            public void onResponse(Call<FaceAttendanceResponse> call, Response<FaceAttendanceResponse> response) {
+                Log.d(TAG, "onResponse: >> AttendanceResponse : ");
 
                 if(response == null) {
                     uiUtils.showShortSnakeBar(getString(R.string.generic_error));
+                    stopScanningTimer();
+                    deactivateScanning();
                     return;
                 }
 
                 if (!response.isSuccessful()) {
                     uiUtils.showShortSnakeBar(getString(R.string.generic_error));
+                    stopScanningImage();
 
                 }else {
-                    AttendanceResponse attendanceResult = response.body();
+                    FaceAttendanceResponse attendanceResult = response.body();
                     if(attendanceResult != null && attendanceResult.isFaceVisible()){
-                        routing.appendParams("isSuccess", true);
-                        routing.navigate(AttendanceResultActivity.class, false);
-                        stopScanningTimer();
-                        deactivateScanning();
+                       markAttendance();
                     }else{
                         routing.appendParams("isSuccess", false);
+                        String siteCode = (String) routing.getParam("siteCode");
+                        routing.appendParams("siteCode", siteCode);
                         routing.navigate(AttendanceResultActivity.class, false);
-                        stopScanningTimer();
-                        deactivateScanning();
+                        stopScanningImage();
                     }
-//                    Log.d(TAG, "onResponse: >> response attendanceResult : "+attendanceResult.toString());
-//                    Log.d(TAG, "onResponse: >> response attendanceResult : "+attendanceResult.isFaceVisible());
-//                    Log.d(TAG, "onResponse: >> response attendanceResult : "+attendanceResult.getId());
-//                    Log.d(TAG, "onResponse: >> response attendanceResult : "+attendanceResult.getError());
+
 
                 }
             }
 
             @Override
-            public void onFailure(Call<AttendanceResponse> call, Throwable t) {
+            public void onFailure(Call<FaceAttendanceResponse> call, Throwable t) {
                 Log.d(TAG, "onFailure: >> AttendanceResponse ");
                 uiUtils.showShortSnakeBar(getString(R.string.generic_error));
-                stopScanningTimer();
-                deactivateScanning();
+                stopScanningImage();
                 t.printStackTrace();
             }
         });
+    }
+
+    private void markAttendance(){
+
+        String attType = (String) routing.getParam("attType");
+        String siteCode = (String) routing.getParam("siteCode");
+
+        setAttending();
+
+        AuthService authService = new AuthService();
+        authService.markAttendance(attType, siteCode, 1)
+                .enqueue(new Callback<List<MarkAttendanceResponse>>() {
+                    @Override
+                    public void onResponse(Call<List<MarkAttendanceResponse>> call, Response<List<MarkAttendanceResponse>> response) {
+
+                        if (!response.isSuccessful()) {
+                            uiUtils.showShortSnakeBar(getString(R.string.generic_error));
+                            stopScanningImage();
+                            removeAttending();
+                            return;
+                        }
+
+                        List<MarkAttendanceResponse> markAttendanceResponses = response.body();
+                        if(markAttendanceResponses == null){
+                            uiUtils.showShortSnakeBar(getString(R.string.generic_error));
+                            stopScanningImage();
+                            removeAttending();
+                            return;
+                        }
+                        if(markAttendanceResponses.get(0).getStatus() != null && TextUtils.equals(markAttendanceResponses.get(0).getStatus().toLowerCase(), getString(R.string.success_status))){
+                            Log.d(TAG, "onResponse: status >> "+markAttendanceResponses.get(0).getStatus());
+                            routing.appendParams("isSuccess", true);
+                            routing.appendParams("attData", markAttendanceResponses.get(0));
+                            routing.navigate(AttendanceResultActivity.class, false);
+
+                            stopScanningImage();
+                        }else {
+                            uiUtils.showShortSnakeBar(getString(R.string.generic_error));
+                            stopScanningImage();
+                        }
+
+                        removeAttending();
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<MarkAttendanceResponse>> call, Throwable t) {
+                        Log.d(TAG, "onFailure: attendance failed >> ");
+                        uiUtils.showShortSnakeBar(getString(R.string.generic_error));
+                        stopScanningImage();
+                        removeAttending();
+                    }
+                });
+    }
+    private void stopScanningImage(){
+        stopScanningTimer();
+        deactivateScanning();
+    }
+
+    private void setAttending(){
+        scanningText.setText(getString(R.string.re_att_attending_text));
+    }
+    private void removeAttending(){
+        scanningText.setText(getString(R.string.re_att_progress_text));
     }
 
 }

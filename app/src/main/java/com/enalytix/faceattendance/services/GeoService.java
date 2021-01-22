@@ -26,7 +26,12 @@ public class GeoService {
     private Activity activity;
     private LocationManager locationManager;
 
+    public static String currentLatLong;
+    public static String distanceFrom;
+
     public GeoService(Activity activity) {
+
+        distanceFrom = "";
         this.activity = activity;
         locationManager = (LocationManager) activity.getSystemService(LOCATION_SERVICE);
 
@@ -47,12 +52,25 @@ public class GeoService {
     }
 
     public boolean isWithinRange(float range, double latitude, double longitude) {
+
+//        if(range == 0.0){
+//            range = 1;
+//            Log.d(TAG, "isWithinRange: distance CCJG : >>  range " + range);
+//        }
         Location targetLocation = new Location("");
         targetLocation.setLatitude(latitude);
         targetLocation.setLongitude(longitude);
 
+        currentLatLong = myLocation.getLatitude()+" , "+myLocation.getLongitude();
 
         float distance = myLocation.distanceTo(targetLocation);
+
+        if(distanceFrom != null){
+            distanceFrom += " / "+distance;
+        }else {
+            distanceFrom = " "+distance;
+        }
+
 
         Log.d(TAG, "isWithinRange: distance CCJG : " + distance);
 

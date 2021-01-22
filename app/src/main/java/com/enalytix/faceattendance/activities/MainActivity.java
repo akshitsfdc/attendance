@@ -7,16 +7,22 @@ import android.os.Handler;
 
 import com.enalytix.faceattendance.R;
 import com.enalytix.faceattendance.models.UserData;
+import com.enalytix.faceattendance.utils.FileUtils;
 import com.enalytix.faceattendance.utils.Routing;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     public static UserData USER_DATA;
-    private Routing routing;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        super.context = this;
+//        super.toolbar = findViewById(R.id.toolbar);
+        super.setObjects();
+
         USER_DATA = new UserData();
 
         routing = new Routing(this);
@@ -26,10 +32,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                routing.navigate(LoginActivity.class, true);
+                if(checkLogin()){
+                    routing.navigate(EmployeeHome.class, true);
+                }else {
+                    routing.navigate(LoginActivity.class, true);
+                }
+
             }
         }, SPLASH_DISPLAY_LENGTH);
 
 
+    }
+
+    private boolean checkLogin(){
+        FileUtils fileUtils = new FileUtils(this);
+        UserData userData = fileUtils.getUserDataFromSharedPre();
+        if(userData != null){
+            MainActivity.USER_DATA = userData;
+        }
+        return userData != null;
     }
 }

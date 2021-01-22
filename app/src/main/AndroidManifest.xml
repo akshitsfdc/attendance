@@ -28,15 +28,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FaceAttendance">
-        <activity android:name=".activities.MaxTryActivity">
+        <activity android:name=".activities.SupervisorHomeActivity">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".activities.NotAtLocationActivity" />
+        <activity android:name=".activities.AttendanceViewActivity"></activity>
+        <activity
+            android:name=".activities.MaxTryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.NotAtLocationActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.BaseActivity"
             android:screenOrientation="portrait" />
@@ -47,6 +49,9 @@
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
             android:value="face" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity
             android:name=".activities.AttendanceResultActivity"
@@ -56,9 +61,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.EmployeeHome"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.OTPActivity"
             android:screenOrientation="portrait" />
@@ -68,7 +71,15 @@
         <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme" />
+            android:theme="@style/SplashTheme">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

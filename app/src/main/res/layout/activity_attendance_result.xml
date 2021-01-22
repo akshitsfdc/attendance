@@ -70,13 +70,13 @@
         android:layout_below="@+id/headerView"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize">
+
         <TextView
             android:id="@+id/siteTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/white" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -223,7 +223,7 @@
                 />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/captureButton"
+                android:id="@+id/cancelAttButton"
                 android:layout_marginTop="20dp"
                 android:layout_below="@+id/updateReg"
                 android:layout_width="match_parent"
@@ -346,7 +346,7 @@
                 />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/negCaptureButton"
+                android:id="@+id/reCaptureButton"
                 android:layout_marginTop="20dp"
                 android:layout_below="@+id/ngRegisterNow"
                 android:layout_width="match_parent"
@@ -357,6 +357,17 @@
                 android:textColor="@color/white"
                 />
         </RelativeLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/loadingIndicator"
+            android:visibility="gone"
+            android:layout_marginBottom="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:indeterminate="true"
+            app:showAnimationBehavior="outward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 </RelativeLayout>

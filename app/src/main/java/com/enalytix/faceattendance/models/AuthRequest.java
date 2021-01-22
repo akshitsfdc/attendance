@@ -3,7 +3,7 @@ package com.enalytix.faceattendance.models;
 public class AuthRequest {
 
     private String mobile_no;
-
+    
     public AuthRequest() {
     }
 
