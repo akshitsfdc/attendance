@@ -49,7 +49,7 @@ public class AttendanceResultActivity extends BaseActivity {
     private ImageView negPosBigImage;
     private RelativeLayout resultNegativeWrapper;
     private RelativeLayout resultPositiveWrapper;
-    private Button ngRegisterNow;
+
     private Button reCaptureButton;
     private Button cancelAttButton;
     private MarkAttendanceResponse markAttendanceResponse;
@@ -57,7 +57,7 @@ public class AttendanceResultActivity extends BaseActivity {
     private TextView phoneNumber;
     private TextView empName;
     private TextView siteTitle;
-    private TextView updateReg;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,13 +78,12 @@ public class AttendanceResultActivity extends BaseActivity {
         resultNegativeWrapper = findViewById(R.id.resultNegativeWrapper);
         resultPositiveWrapper = findViewById(R.id.resultPositiveWrapper);
         negPosBigImage = findViewById(R.id.negPosBigImage);
-        ngRegisterNow = findViewById(R.id.ngRegisterNow);
         reCaptureButton = findViewById(R.id.reCaptureButton);
         cancelAttButton = findViewById(R.id.cancelAttButton);
         phoneNumber = findViewById(R.id.phoneNumber);
         empName = findViewById(R.id.empName);
         siteTitle = findViewById(R.id.siteTitle);
-        updateReg = findViewById(R.id.updateReg);
+
 
 
         String title = (String)routing.getParam("siteName");
@@ -100,9 +99,21 @@ public class AttendanceResultActivity extends BaseActivity {
 
 
             MainActivity.USER_DATA.setAttendanceTry(0);
+
+            String attType = (String) routing.getParam("attType");
+
+            if(TextUtils.equals(attType,"CheckIn")){
+                MainActivity.USER_DATA.setCheckInCompleted(true);
+                MainActivity.USER_DATA.setCheckoutCompleted(false);
+            }else {
+                MainActivity.USER_DATA.setCheckoutCompleted(true);
+                MainActivity.USER_DATA.setCheckInCompleted(false);
+            }
+
             if(!fileUtils.saveUserDataInSharedPre(MainActivity.USER_DATA)){
                 Log.d(TAG, "onCreate: user data save failed.");
             }
+
             setLabels();
         }else {
             resultNegativeWrapper.setVisibility(View.VISIBLE);
@@ -116,13 +127,11 @@ public class AttendanceResultActivity extends BaseActivity {
             setBitmap("xyz", false);
         }
 
-        ngRegisterNow.setOnClickListener(v -> {
-            registerSelf();
-//            super.routing.navigate(RegisterAgainResponseActivity.class, false);
-        });
-        updateReg.setOnClickListener(v -> {
-            registerSelf();
-        });
+//        ngRegisterNow.setOnClickListener(v -> {
+//            registerSelf();
+////            super.routing.navigate(RegisterAgainResponseActivity.class, false);
+//        });
+
         reCaptureButton.setOnClickListener(v -> {
             if(MainActivity.USER_DATA.getAttendanceTry() >= maxAttendanceTry) {
                routing.navigate(EmployeeHome.class, true);

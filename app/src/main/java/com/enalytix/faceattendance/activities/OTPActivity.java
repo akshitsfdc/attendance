@@ -261,6 +261,8 @@ public class OTPActivity extends BaseActivity {
     private void setUserData(SendOTPResponse sendOTPResponse, String mobileNumber){
 
         MainActivity.USER_DATA.setMobileNumber(mobileNumber);
+        MainActivity.USER_DATA.setCheckoutCompleted(true);
+        MainActivity.USER_DATA.setCheckInCompleted(false);
         MainActivity.USER_DATA.setEmpCode(sendOTPResponse.getEmpCode());
         MainActivity.USER_DATA.setEmployeeId(sendOTPResponse.getEmployeeId());
         MainActivity.USER_DATA.setThumbnail(sendOTPResponse.getThumbnail());

@@ -61,7 +61,7 @@ public class AttendanceViewActivity extends BaseActivity {
         super.setTitle();
         super.setThumbnail();
 
-//        mobileNumber = MainActivity.USER_DATA.getMobileNumber().trim();
+        mobileNumber = MainActivity.USER_DATA.getMobileNumber().trim();
 
         monthLabel = findViewById(R.id.monthLabel);
         recyclerView = findViewById(R.id.recyclerView);

@@ -92,5 +92,6 @@
     <dimen name="simpletooltip_arrow_height">8dp</dimen>
     <dimen name="simpletooltip_animation_padding">4dp</dimen>
 
+    <dimen name="upload_picture_text">12sp</dimen>
 
 </resources>

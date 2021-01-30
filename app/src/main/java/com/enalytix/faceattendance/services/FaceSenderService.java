@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -25,7 +26,7 @@ public class FaceSenderService {
 
     private Activity activity;
     private FaceAttendanceAPI jsonPlaceHolderApi;
-    private static final String BASE_URL = "http://ec2-3-129-150-29.us-east-2.compute.amazonaws.com/";
+    private static final String BASE_URL = "http://3.129.150.29/";//"http://ec2-3-129-150-29.us-east-2.compute.amazonaws.com/";
 
     public FaceSenderService(Activity activity){
 
@@ -36,7 +37,11 @@ public class FaceSenderService {
                 .create();
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(120, TimeUnit.SECONDS)
+                .readTimeout(120, TimeUnit.SECONDS)
+                .writeTimeout(120, TimeUnit.SECONDS)
                 .addInterceptor(new Interceptor() {
                     @Override
                     public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -54,6 +59,7 @@ public class FaceSenderService {
                 .addInterceptor(loggingInterceptor)
 
                 .build();
+
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -85,6 +91,9 @@ public class FaceSenderService {
     }
 
     public Call<FaceAttendanceResponse> validateUser(File fileObj, String siteId){
+
+//        siteId = "1"; //to be changed in production
+
 
         RequestBody fbody = RequestBody.create(fileObj,MediaType.parse("image/*"));
 

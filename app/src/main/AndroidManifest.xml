@@ -28,11 +28,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FaceAttendance">
-        <activity android:name=".activities.SupervisorHomeActivity">
+        <activity android:name=".activities.RegistrationFailed"></activity>
+        <activity android:name=".activities.RegisterEmployeeActivity"
+            android:screenOrientation="portrait"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".activities.AttendanceViewActivity"></activity>
+        <activity android:name=".activities.SupervisorHomeActivity"></activity>
+        <activity android:name=".activities.AttendanceViewActivity" />
         <activity
             android:name=".activities.MaxTryActivity"
             android:screenOrientation="portrait" />
@@ -71,15 +78,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
+            android:theme="@style/SplashTheme" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

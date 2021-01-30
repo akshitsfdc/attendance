@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.RegisterEmployeeActivity"
+    android:id="@+id/parent"
+    android:background="@color/primary"
+    >
+
+    <RelativeLayout
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        >
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:menu="@menu/top_menues"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="@dimen/emp_home_app_logo_size"
+                        android:layout_height="@dimen/emp_home_app_logo_size"
+
+                        android:layout_marginStart="@dimen/emp_home_margin_h"
+                        android:src="@drawable/ic_logo_icon" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/emp_home_profile_pic"
+                        android:layout_height="@dimen/emp_home_profile_pic"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/emp_home_margin_r_h"
+                        app:cardCornerRadius="@dimen/home_profile_round_radius"
+                        app:cardBackgroundColor="@color/white"
+                        >
+                        <ImageView
+                            android:id="@+id/profilePicture"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            />
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/siteNameheader"
+        android:layout_below="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+        <TextView
+            android:id="@+id/siteTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/mainContainer"
+        android:layout_below="@+id/siteNameheader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/home_round_background"
+        android:elevation="@dimen/home_container_round_elevation"
+        >
+        <TextView
+            android:id="@+id/timeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/emp_home_time_text"
+            android:layout_marginTop="@dimen/emp_home_time_top"
+            android:textColor="@color/grey"
+            />
+
+        <RelativeLayout
+            android:id="@+id/contentWrapper"
+            android:layout_below="@+id/timeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="20dp"
+            >
+
+            <RelativeLayout
+                android:id="@+id/posResWrapper"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/attendance_recorded_bg"
+                >
+                <ImageView
+                    android:id="@+id/negIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_recored"
+                    android:layout_marginStart="@dimen/att_res_result_text_margin_h"
+                    />
+                <TextView
+
+                    android:layout_toRightOf="@+id/negIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Employee Registration Failed"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/att_res_result_text_margin_h"
+                    android:layout_marginEnd="@dimen/att_res_result_text_margin_h"
+                    android:textColor="@color/secondary"
+                    />
+
+
+            </RelativeLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/mobileNumberOuter"
+                android:layout_below="@+id/posResWrapper"
+                android:layout_marginTop="20dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Employee Mobile No.*"
+                app:boxCornerRadiusBottomEnd="@dimen/login_textbox_corner"
+                app:boxCornerRadiusBottomStart="@dimen/login_textbox_corner"
+                app:boxCornerRadiusTopEnd="@dimen/login_textbox_corner"
+                app:boxCornerRadiusTopStart="@dimen/login_textbox_corner"
+                app:boxStrokeColor="@color/primary"
+                app:errorTextColor="@color/warn"
+                app:hintEnabled="true"
+                android:textColorHint="@color/hint"
+
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mobileNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textColor="@color/grey"
+                    android:maxLength="10"
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nameOuter"
+                android:layout_below="@+id/mobileNumberOuter"
+                android:layout_marginTop="20dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Employee Name *"
+                app:boxCornerRadiusBottomEnd="@dimen/login_textbox_corner"
+                app:boxCornerRadiusBottomStart="@dimen/login_textbox_corner"
+                app:boxCornerRadiusTopEnd="@dimen/login_textbox_corner"
+                app:boxCornerRadiusTopStart="@dimen/login_textbox_corner"
+                app:boxStrokeColor="@color/primary"
+                app:errorTextColor="@color/warn"
+                app:hintEnabled="true"
+                android:textColorHint="@color/hint"
+
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="@color/grey"
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/empIdOuter"
+                android:layout_below="@+id/nameOuter"
+                android:layout_marginTop="20dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Employee Id*"
+                app:boxCornerRadiusBottomEnd="@dimen/login_textbox_corner"
+                app:boxCornerRadiusBottomStart="@dimen/login_textbox_corner"
+                app:boxCornerRadiusTopEnd="@dimen/login_textbox_corner"
+                app:boxCornerRadiusTopStart="@dimen/login_textbox_corner"
+                app:boxStrokeColor="@color/primary"
+                app:errorTextColor="@color/warn"
+                app:hintEnabled="true"
+                android:textColorHint="@color/hint"
+
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/empIdEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="@color/grey"
+
+                    
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <LinearLayout
+                android:id="@+id/imagesContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/empIdOuter"
+                android:weightSum="3"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/firstPicWrapper"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="100dp"
+                    android:background="@drawable/pic_background"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/firstFaceAddImageWrapper"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        >
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_baseline_add_24"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:text="Upload Front Face"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/upload_picture_text"
+                            />
+
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/firstPicture"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        />
+                </RelativeLayout>
+            <RelativeLayout
+                    android:id="@+id/secondPicWrapper"
+                    android:layout_marginStart="10dp"
+                    android:layout_height="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/pic_background"
+                    >
+
+                <LinearLayout
+                    android:id="@+id/secondFaceAddImageWrapper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_add_24"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Upload Left Face"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/upload_picture_text"
+                        />
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/secondPicture"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    />
+            </RelativeLayout>
+        <RelativeLayout
+                    android:id="@+id/thirdPicWrapper"
+                    android:layout_width="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:layout_height="100dp"
+            android:background="@drawable/pic_background"
+                    >
+
+            <LinearLayout
+                android:id="@+id/thirdFaceAddImageWrapper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_24"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Upload Right Face"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/upload_picture_text"
+                    />
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/thirdPicture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/saveButton"
+                android:layout_below="@+id/imagesContainer"
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_button_height"
+                android:text="Save"
+                android:textSize="@dimen/re_att_capture_text"
+                app:cornerRadius="@dimen/login_button_corner"
+                android:textColor="@color/white"
+                />
+        </RelativeLayout>
+
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/loadingIndicator"
+            android:visibility="gone"
+            android:layout_marginBottom="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:indeterminate="true"
+            app:showAnimationBehavior="outward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+<!--    Capture Code started-->
+
+    <RelativeLayout
+        android:id="@+id/cameraWrapper"
+        android:layout_below="@+id/siteNameheader"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/home_round_background"
+        android:backgroundTint="@color/black"
+        android:elevation="@dimen/home_container_round_elevation"
+        >
+
+        <com.enalytix.faceattendance.camera.CameraSourcePreview
+            android:id="@+id/preview"
+            android:screenReaderFocusable="true"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+
+            <com.enalytix.faceattendance.camera.GraphicOverlay
+                android:id="@+id/faceOverlay"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </com.enalytix.faceattendance.camera.CameraSourcePreview>
+
+
+
+        <RelativeLayout
+            android:id="@+id/buttonContainer"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/re_att_capture_button_margin_v"
+            >
+
+            <!--            <Button-->
+            <!--                android:id="@+id/cancelButton"-->
+            <!--                android:layout_width="@dimen/re_att_cancel_button_width"-->
+            <!--                android:layout_height="@dimen/re_att_cancel_button_height"-->
+            <!--                android:layout_marginStart="@dimen/re_att_cancel_button_margin_h"-->
+            <!--                android:text="X"-->
+            <!--                android:background="@drawable/button_corners"-->
+
+            <!--                android:layout_alignParentBottom="true"-->
+
+            <!--                />-->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancelButton"
+                android:layout_width="@dimen/re_att_cancel_button_width"
+                android:layout_height="@dimen/login_button_height"
+                android:layout_marginStart="@dimen/re_att_cancel_button_margin_h"
+                android:text="X"
+                android:textSize="@dimen/re_att_capture_text"
+                app:cornerRadius="@dimen/login_button_corner"
+                android:textColor="@color/white"
+                />
+            <RelativeLayout
+                android:layout_toRightOf="@+id/cancelButton"
+                android:layout_marginStart="@dimen/re_att_capture_button_margin_h"
+                android:layout_marginEnd="@dimen/re_att_capture_button_margin_h"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                >
+
+                <!--                <Button-->
+                <!--                    android:id="@+id/captureButton"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="@dimen/re_att_capture_button_height"-->
+                <!--                    android:text="@string/re_att_capture_button"-->
+                <!--                    android:textSize="@dimen/re_att_capture_text"-->
+                <!--                    android:background="@drawable/button_corners"-->
+
+                <!--                    />-->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/captureButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/login_button_height"
+                    android:text="@string/re_att_capture_button"
+                    android:textSize="@dimen/re_att_capture_text"
+                    app:cornerRadius="@dimen/login_button_corner"
+                    android:textColor="@color/white"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/progressContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+
+                    >
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progressIndicator"
+                        android:layout_centerInParent="true"
+                        android:indeterminate="false"
+                        android:progress="0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:trackColor="@color/primary_var"
+                        app:trackCornerRadius="@dimen/login_button_corner"
+                        app:trackThickness="50dp"
+
+                        />
+                    <TextView
+                        android:id="@+id/scanningText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Uploading Face..."
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/re_att_scanning_text"
+                        android:layout_centerInParent="true"
+                        />
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/labelCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"
+            app:cardCornerRadius="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:cardBackgroundColor="@color/white"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textAlignment="center"
+                    android:text="Please blink so that we can confirm you are a live person "
+                    android:textSize="18sp"
+                    android:textColor="@color/grey"
+                    />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/faceTypeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="LEFT"
+            android:textColor="@color/secondary"
+
+
+            android:textSize="16sp" />
+    </RelativeLayout>
+</RelativeLayout>

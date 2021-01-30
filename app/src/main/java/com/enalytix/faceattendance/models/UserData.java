@@ -17,6 +17,8 @@ public class UserData {
     private ArrayList<Site> sites;
     private int attendanceTry;
     private String mobileNumber;
+    private boolean checkInCompleted;
+    private boolean checkoutCompleted;
 
     public UserData() {
     }
@@ -100,5 +102,21 @@ public class UserData {
 
     public void setAttendanceTry(int attendanceTry) {
         this.attendanceTry = attendanceTry;
+    }
+
+    public boolean isCheckInCompleted() {
+        return checkInCompleted;
+    }
+
+    public void setCheckInCompleted(boolean checkInCompleted) {
+        this.checkInCompleted = checkInCompleted;
+    }
+
+    public boolean isCheckoutCompleted() {
+        return checkoutCompleted;
+    }
+
+    public void setCheckoutCompleted(boolean checkoutCompleted) {
+        this.checkoutCompleted = checkoutCompleted;
     }
 }

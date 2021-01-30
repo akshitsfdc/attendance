@@ -11,6 +11,8 @@ import com.enalytix.faceattendance.models.MyAttendanceRequest;
 import com.enalytix.faceattendance.models.MyAttendanceResponse;
 import com.enalytix.faceattendance.models.RegisterSelfRequest;
 import com.enalytix.faceattendance.models.RegisterSelfResponse;
+import com.enalytix.faceattendance.models.RegisterUserRequest;
+import com.enalytix.faceattendance.models.RegisterUserResponse;
 import com.enalytix.faceattendance.models.SendOTPResponse;
 import com.enalytix.faceattendance.models.UserData;
 import com.enalytix.faceattendance.utils.UIUtils;
@@ -102,5 +104,10 @@ public class AuthService {
     public Call<MyAttendanceResponse> getMyAttendance(String mobileNumber, String monthYear){
 
         return jsonPlaceHolderApi.getAttendance(new MyAttendanceRequest(mobileNumber, monthYear));
+    }
+
+    public Call<List<RegisterUserResponse>> registerEmployee(RegisterUserRequest registerUserRequest){
+
+        return jsonPlaceHolderApi.registerUser(registerUserRequest);
     }
 }

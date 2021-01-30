@@ -10,6 +10,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Base64;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -214,4 +215,23 @@ public class FileUtils {
                 .error(R.drawable.ic_log_in).fallback(R.drawable.ic_log_out)
                 .into(imageView);
     }
+
+    public  Bitmap convert(String base64Str) throws IllegalArgumentException
+    {
+        byte[] decodedBytes = Base64.decode(
+                base64Str.substring(base64Str.indexOf(",")  + 1),
+                Base64.DEFAULT
+        );
+
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+    }
+
+    public  String convert(Bitmap bitmap)
+    {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+
+        return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+    }
+
 }

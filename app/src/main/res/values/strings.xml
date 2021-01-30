@@ -68,15 +68,12 @@
     <string name="app_provider">com.enalytix.faceattendance.provider</string>
 
 
-
-
     <!--    supervisor Home-->
     <string name="super_home_record_att_label">Record Employee Attendance</string>
     <string name="super_home_manage_emp">Manage Employees</string>
     <string name="super_home_dashboard_emp">Employee Dashboard</string>
     <string name="super_home_check_in">Check In</string>
     <string name="super_home_check_out">Check Out</string>
-
 
 
     <string name="temp_number">8527024131</string>

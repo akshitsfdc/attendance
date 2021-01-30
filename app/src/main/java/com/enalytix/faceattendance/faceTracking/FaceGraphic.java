@@ -126,10 +126,10 @@ public class FaceGraphic extends GraphicOverlay.Graphic {
 
 //        Log.d(TAG, "draw: >> left >> "+left+" top >> "+top+" right >> "+right+" bottom >> "+bottom);
 
-        RecordAttendanceActivity.faceCoordinates.left = (int)ceil(left);
-        RecordAttendanceActivity.faceCoordinates.top = (int)ceil(top);
-        RecordAttendanceActivity.faceCoordinates.right = (int)ceil(right);
-        RecordAttendanceActivity.faceCoordinates.bottom = (int)ceil(bottom);
+//        RecordAttendanceActivity.faceCoordinates.left = (int)ceil(left);
+//        RecordAttendanceActivity.faceCoordinates.top = (int)ceil(top);
+//        RecordAttendanceActivity.faceCoordinates.right = (int)ceil(right);
+//        RecordAttendanceActivity.faceCoordinates.bottom = (int)ceil(bottom);
         if(left > 0 && top > 0){
             canvas.drawCircle(x, y, FACE_POSITION_RADIUS, mFacePositionPaint);
 //            canvas.drawRect(left, top, right, bottom, mBoxPaint);

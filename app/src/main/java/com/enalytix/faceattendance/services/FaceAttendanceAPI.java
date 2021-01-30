@@ -12,6 +12,8 @@ import com.enalytix.faceattendance.models.MyAttendanceRequest;
 import com.enalytix.faceattendance.models.MyAttendanceResponse;
 import com.enalytix.faceattendance.models.RegisterSelfRequest;
 import com.enalytix.faceattendance.models.RegisterSelfResponse;
+import com.enalytix.faceattendance.models.RegisterUserRequest;
+import com.enalytix.faceattendance.models.RegisterUserResponse;
 import com.enalytix.faceattendance.models.SendOTPResponse;
 
 import java.util.List;
@@ -42,6 +44,10 @@ public interface FaceAttendanceAPI {
 
     @POST("get-attendance")
     Call<MyAttendanceResponse> getAttendance(@Body MyAttendanceRequest myAttendanceRequest);
+
+    @POST("update-user")
+    Call<List<RegisterUserResponse>> registerUser(@Body RegisterUserRequest registerUserRequest);
+
     @Multipart
     @POST("uploadatt")
     Call<FaceAttendanceResponse> registerUserByFace(

@@ -70,10 +70,20 @@ public class EmployeeHome extends BaseActivity {
         myAttLogoImage = findViewById(R.id.myAttLogoImage);
 
         loginWrapper.setOnClickListener(v -> {
-            goToLogin();
+            if(!MainActivity.USER_DATA.isCheckInCompleted()){
+                goToLogin();
+            }else {
+                uiUtils.showShortSnakeBar("You need to check out first");
+            }
+
         });
         logoutWrapper.setOnClickListener(v -> {
-            goToCheckout();
+            if(!MainActivity.USER_DATA.isCheckoutCompleted()){
+                goToCheckout();
+            }else {
+                uiUtils.showShortSnakeBar("You need to check in first");
+            }
+
         });
         myAttLogoImage.setOnClickListener(v -> {
             routing.navigate(AttendanceViewActivity.class, false);
@@ -96,24 +106,18 @@ public class EmployeeHome extends BaseActivity {
         String siteLatLong = "";
 
         if(MainActivity.USER_DATA.getAttendanceTry() >= maxAttendanceTry){
-//            routing.navigate(MaxTryActivity.class, false);
-//            return;
+            routing.navigate(MaxTryActivity.class, false);
+            return;
         }
-//        routing.appendParams("attType","CheckIn");
-//        routing.appendParams("siteCode","TYDH13");
-//        routing.appendParams("siteName", "Toyota-Dhanbad");
-//        routing.navigate(RecordAttendanceActivity.class, false);
 
         for (Site site : MainActivity.USER_DATA.getSites()) {
 
-//            site.setGeocodingArea(300000);
             try {
                 siteLatLong +=" / "+site.getSiteLatitude()+" , "+site.getSiteLongitude() +"["+site.getGeocodingArea()+"]";
 
                 if(site.getSiteLatitude().length() == 0 || site.getSiteLongitude().length() == 0){
                     continue;
                 }
-                site.setGeocodingArea(400000);
                 if(geoService.isWithinRange(site.getGeocodingArea(), Double.parseDouble(site.getSiteLatitude()), Double.parseDouble(site.getSiteLongitude()))){
                     routing.appendParams("attType","CheckIn");
                     routing.appendParams("siteCode",site.getSiteCode());
@@ -143,13 +147,6 @@ public class EmployeeHome extends BaseActivity {
             routing.navigate(MaxTryActivity.class, false);
             return;
         }
-//
-//        routing.appendParams("attType","CheckOut");
-//        routing.appendParams("siteCode","TYDH13");
-//        routing.appendParams("siteName", "Toyota-Dhanbad");
-//
-//        routing.navigate(RecordAttendanceActivity.class, false);
-
 
         for (Site site : MainActivity.USER_DATA.getSites()) {
 

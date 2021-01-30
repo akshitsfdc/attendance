@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.RegistrationFailed"
+    android:id="@+id/parent"
+    android:background="@color/primary"
+    >
+
+    <RelativeLayout
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        >
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:menu="@menu/top_menues"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="@dimen/emp_home_app_logo_size"
+                        android:layout_height="@dimen/emp_home_app_logo_size"
+
+                        android:layout_marginStart="@dimen/emp_home_margin_h"
+                        android:src="@drawable/ic_logo_icon" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/emp_home_profile_pic"
+                        android:layout_height="@dimen/emp_home_profile_pic"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/emp_home_margin_r_h"
+                        app:cardCornerRadius="@dimen/home_profile_round_radius"
+                        app:cardBackgroundColor="@color/white"
+                        >
+                        <ImageView
+                            android:id="@+id/profilePicture"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            />
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/siteNameheader"
+        android:layout_below="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+
+        <TextView
+            android:id="@+id/siteTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mainContainer"
+        android:layout_below="@+id/siteNameheader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/home_round_background"
+        android:elevation="@dimen/home_container_round_elevation"
+        >
+
+        <TextView
+            android:id="@+id/timeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/emp_home_time_text"
+            android:layout_marginTop="@dimen/emp_home_time_top"
+            android:textColor="@color/grey"
+            />
+
+        <!--        Attendance failed-->
+
+        <RelativeLayout
+            android:id="@+id/resultNegativeWrapper"
+            android:layout_below="@+id/timeLabel"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="@dimen/att_res_result_container_margin_h"
+            android:layout_marginEnd="@dimen/att_res_result_container_margin_h"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/negResWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/attendance_failed_bg"
+                >
+                <ImageView
+                    android:id="@+id/negIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_not_found"
+                    android:layout_marginStart="@dimen/att_res_result_text_margin_h"
+                    />
+                <TextView
+
+                    android:layout_toRightOf="@+id/negIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Employee Registration Failed"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/att_res_result_text_margin_h"
+                    android:layout_marginEnd="@dimen/att_res_result_text_margin_h"
+                    android:textColor="@color/warn"
+                    />
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/desText"
+                android:layout_below="@+id/negResWrapper"
+                android:text="Please take a clear picture of the face and re-register"
+                android:textAlignment="center"
+                android:textColor="@color/grey"
+                android:layout_marginTop="30dp"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/registerAgainButton"
+                android:layout_marginBottom="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/app_button_height"
+                android:text="Register Again"
+                android:textSize="@dimen/re_att_capture_text"
+                app:cornerRadius="@dimen/login_button_corner"
+                android:textColor="@color/white"
+                />
+        </RelativeLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/loadingIndicator"
+            android:visibility="gone"
+            android:layout_marginBottom="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:indeterminate="true"
+            app:showAnimationBehavior="outward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+</RelativeLayout>
